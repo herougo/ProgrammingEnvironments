@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm *.zip
+foldername="$(basename $(pwd))"
+zip "${foldername}.zip" *

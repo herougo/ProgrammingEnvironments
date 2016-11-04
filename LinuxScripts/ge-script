@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gedit $1 --new-window & disown

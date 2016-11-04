@@ -1,0 +1,11 @@
+#!/bin/bash
+
+scriptlocation='~/Documents/Git/ProgrammingEnvironments/LinuxScripts'
+cd $scriptlocation
+filename="${1}-script"
+filelocation="$scriptlocation/$filename"
+
+echo '#!/bin/bash' > $filename
+chmod u+x $filename
+echo "alias ${1}='$filelocation'"
+vi $filename

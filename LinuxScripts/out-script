@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo `${@}` > "out"
+gedit out --new-window & disown
