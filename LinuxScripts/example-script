@@ -1,0 +1,53 @@
+#!/bin/bash
+
+printyo() {
+	echo $1
+}
+
+returnvalue1() {
+	bonjour=1;
+}
+
+returnvalue2() {
+	local hi=3;
+	echo $hi
+}
+
+printyo
+returnvalue1
+echo $bonjour
+echo $(returnvalue2)
+
+x=1
+if [ $x -eq 1 ]; then
+	echo "hi1"
+elif [ $x -le 1 ]; then
+	echo "hi2"
+elif [ $x -ne 2 ]; then
+	echo "hi3"
+else
+	exit 1;
+fi
+
+x=$((x+1))
+
+
+file="hello"
+concat="${file}world"
+
+if [ concat = "helloworld" ]; then
+	echo "strings equal"
+fi
+
+while [ ${x} -ne 0 ]; do
+	echo 
+	x=$((x-1))
+done
+
+for word in `cat $2`; do
+	echo $word
+done
+
+for file in *.cc; do
+	echo $file
+done
