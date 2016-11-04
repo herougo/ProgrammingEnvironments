@@ -1,0 +1,89 @@
+# to use this, copy this file somewhere and change commands in the "Require Change" section. Define a "yo.sh" file in your home 
+# directory to simply run this file. Thus, to get the aliases, you can get the aliases by typing "~/yo". You can instead automate this by 
+# modifying the cmd shortcut to run a command on startup.
+
+# Note that lines with "#" in front are comments
+
+
+# **********************************
+# General
+# **********************************
+
+# alias np=notepad $*
+
+alias op='xdg-open'
+alias start='xdg-open'
+alias s.='xdg-open .'
+alias c..='cd ../..'
+alias ch='chmod u+x'
+alias dc='echo Oops; cd'
+alias findy='find . -name'
+# findy '*substring*'
+# find / -atime 50
+# find / -amin -60
+# /\ last 50 days and 60 minutes
+alias shutdowny='sudo shutdown -h now'
+# update linux
+alias updatey='sudo yum -y update'
+
+alias testy='cat test.in | ./a.out'
+
+# **********************************
+# Aliases for Scripts
+# **********************************
+
+alias cl='~/Documents/Git/ProgrammingEnvironments/LinuxScripts/cl-script'
+alias ge='~/Documents/Git/ProgrammingEnvironments/LinuxScripts/ge-script'
+alias gr='~/Documents/Git/ProgrammingEnvironments/LinuxScripts/gr-script'
+alias newscript='~/Documents/Git/ProgrammingEnvironments/LinuxScripts/newscript-script'
+alias out='~/Documents/Git/ProgrammingEnvironments/LinuxScripts/out-script'
+alias zipall='~/Documents/Git/ProgrammingEnvironments/LinuxScripts/zipall-script'
+alias unzipy='~/Documents/Git/ProgrammingEnvironments/LinuxScripts/unzipy-script'
+
+# **********************************
+# Require Change
+# **********************************
+
+alias aly="gedit /usr/scripts/aliases --new-window & disown"
+alias ks='gedit ~/Documents/Git/ProgrammingEnvironments/LinuxKeyboardShortcuts --new-window & disown'
+alias doc="cd ~/Documents/"
+alias gity="cd ~/Documents/Git"
+alias scr="cd ~/Documents/Git/ProgrammingEnvironments/LinuxScripts/; ls"
+alias newmake='cp ~/Documents/Git/ProgrammingEnvironments/LinuxScripts/Makefile .; vi Makefile'
+
+
+# **********************************
+# Other Help
+# **********************************
+
+# doskey src=cd C:\src
+# set PATH=C:\src\programs\python27;%PATH%
+# doskey sprod=c:\Users\i854584\Documents\Commands\sendProdBuild $1
+# (create own .cmd files)
+
+
+
+
+
+
+# add current folder and contents as github project and upload
+# add file to github and upload and go back to original directory
+# "t" - > "test" -> "cat test.in | ./a.out"
+
+
+
+# ssh
+# create aliased script
+# 
+
+# xdg-open or gnome-open work
+
+
+
+
+# **********************************
+# Unresolved Questions
+# **********************************
+
+# how to use script to use cd
+# Makefile isn't removing .o and .d files
