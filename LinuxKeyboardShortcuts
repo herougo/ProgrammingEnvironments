@@ -96,6 +96,8 @@ alias newmake='cp ~/Documents/Git/ProgrammingEnvironments/LinuxScripts/Makefile 
 # xdg-open or gnome-open work
 
 
+# testing git update
+
 
 
 # **********************************
@@ -106,3 +108,4 @@ alias newmake='cp ~/Documents/Git/ProgrammingEnvironments/LinuxScripts/Makefile 
 # Makefile isn't removing .o and .d files
 # git push without authentication
 # gedit something and have it in focus
+
