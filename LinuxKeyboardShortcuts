@@ -27,6 +27,7 @@ alias updatey='sudo yum -y update'
 alias testy='cat test.in | ./a.out'
 alias sublime='sublime_text'
 alias subl='sublime_text'
+alias py='python'
 
 
 # **********************************
