@@ -1,0 +1,7 @@
+[
+	{"keys": ["ctrl+9"], "command": "run_macro_file", "args": {"file":"Packages/User/bracket.sublime-macro"}},
+	{ "keys": ["ctrl+t"], "command": "new_file" },
+	{ "keys": ["ctrl+e"], "command": "example" },
+	{ "keys": ["ctrl+u"], "command": "git_update" },
+	{ "keys": ["f5"], "command": "load_terminal" }
+]

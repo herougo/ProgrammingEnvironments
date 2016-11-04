@@ -1,0 +1,31 @@
+bracket.sublime-macro
+- prints "() { ... }" stuff
+- go to key bindings and bind it to Ctrl+9
+
+Other Key Bindings:
+- Ctrl + T: change to be equivalent to Ctrl + N
+
+Sublime Plugin:
+- to create one, click Tools > Developer > Create Plugin
+- the plugin will get a command name from its class name (ie StringExamplePlugin -> string_example)
+  - you can set a key binding by adding this: { "keys": ["ctrl+e"], "command": "string_example" }
+- http://www.sublimetext.com/docs/3/api_reference.html#sublime
+- 3 different types of commands:
+  - ApplicationCommand - application level
+  - WindowCommand - window level
+  - TextCommand - view/file level
+- 
+
+Done:
+- function that gets location of current file
+- plugin which runs command on current file location
+  - plugin which runs "git commit -am update" on current file location
+    - bind to Ctrl + u
+  - plugin which opens terminal at the file's directory
+- plugin which runs command on current line
+
+Plugin To Do:
+  - plugin that runs (undo git command)
+    - bind to Ctrl + Shift + Enter
+  - plugin which runs script on file and replaces the file with the script's output then reloads file in Sublime (then commits the result?)
+    - bind to (various)
