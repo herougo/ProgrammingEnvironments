@@ -5,7 +5,7 @@ cd $scriptlocation
 filename="${1}-script"
 filelocation="$scriptlocation/$filename"
 
-echo '#!/bin/bash' > $filename
+echo -e '#!/bin/bash\n\n' > $filename
 chmod u+x $filename
 echo "alias ${1}='$filelocation'"
 vi $filename
