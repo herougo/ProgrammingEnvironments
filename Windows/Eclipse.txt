@@ -1,0 +1,10 @@
+Key Bindings
+
+- Go to Windows > Preferences > General > Keys
+- make the following changes:
+  - Run: Ctrl + Enter
+  - Debug: F5
+  - Step Over: F10
+  - Step Into: F11
+  - Step Return: Ctrl+F11
+  - Terminate: Shift+F5
