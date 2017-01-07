@@ -1,7 +1,10 @@
 #!/bin/bash
 
+if [ $# -ne 1 ]; then
+   echo "newscript needs one argument"
+fi
 scriptlocation='~/Documents/Git/ProgrammingEnvironments/LinuxScripts'
-cd $scriptlocation
+cd "$scriptlocation"
 filename="${1}-script"
 filelocation="$scriptlocation/$filename"
 

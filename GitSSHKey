@@ -1,0 +1,20 @@
+What I did on Linux to set up GitHub SSH Keys (ie require no password)
+- cd ~/.ssh
+- ls -al # check for existing keys
+         # public keys are in .pub files
+- ssh-keygen -t rsa -b 4096 -C "your_github_email@example.com"
+  # (save file name as github)
+- eval "$(ssh-agent -s)"
+- ssh-add ~/.ssh/github
+- # add the key to the github account (ie log in and go to settings > )
+- # make sure repository is using ssh instead of https
+  For example, a github project like Git will have https url
+    https://github.com/<Username>/<Project>.git
+  and the ssh one:
+    git@github.com:<Username>/<Project>.git
+  You can do:
+    git remote set-url origin git@github.com:<Username>/<Project>.git
+
+
+Sources
+- https://help.github.com/articles/generating-an-ssh-key/
