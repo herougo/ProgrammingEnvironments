@@ -1,0 +1,545 @@
+- python trick (works in 2.7.10) - unpacking argument lists
+  arg = [[1,2], [3,4], 'r']
+  plt.plot(*arg) # the ‘*’ unpacks the list and provides 2 arguments to plot instead of 1
+- python zip function
+  zip takes lists x1, … xn and produces a list of lists; the with list in the output contains the ith element of each of x1, … xn
+
+  x = [1, 2, 3]
+  y = [4, 5, 6]
+  zipped = zip(x, y) # zipped = [(1, 4), (2, 5), (3, 6)]
+  x2, y2 = zip(*zipped)
+  x == list(x2) and y == list(y2)
+- if __name__ == "__main__":
+      # this block will run iff the file was run explicitly (as opposed being imported by something else)
+
+* install virtual env and use jupyter
+mkdir ~/Documents/Jupyter
+cd ~/Documents/
+sudo pip install virtualenv
+virtualenv venv
+
+source venv/bin/activate
+pip install --upgrade pip
+pip install notebook
+alias jup='cd ~/Documents/Jupyter; source ../venv/bin/activate; jupyter notebook'
+# control + c to close
+deactivate # exit virtualenv
+
+* more git stuff
+git init # make current directory a git repository
+
+git init GitRepo # create folder GitRepo as new git repository
+
+git add -A # adds all new files within the git repository
+
+to ignore files, in the main directory of the repository, type "touch .gitignore"
+Here is an example of what to put in as contents:
+# I am a comment     #
+######################
+*.o
+# the above line includes hi/yo.o
+ignoreme.txt
+hi/ignoreme.txt
+
+# I am another comment #
+########################
+
+
+
+python language quirks
+- for lists or ndarrays arr1 and arr2
+arr1 = [1, 2, 3]
+arr2 = arr1     # arr2 becomes a reference for the contents of arr1
+def modifier1(arr):
+    arr = [100]
+def modifier2(arr)
+    arr[0] = 100
+
+modifier1(arr1) # arr1 is unchanged
+modifier1(arr2) # both are unchanged
+modifier2(arr1) # arr1 is modified and change is visible to arr2 too
+
+hithere = [1,2,3]
+yothere = hithere
+hithere = [3, 4]
+print(hithere, yothere)
+# yields: ([3, 4], [1, 2, 3])
+
+- importing imports
+# file 1 - everything.py
+import nunmpy as np
+import matplotlib.pyplot as plt
+
+# file 2 - yo.py
+from everything import *
+print(np.sum([1,2]))
+
+- importing within a package
+# file 1 - ayo.py
+from yo.importme import otherprint
+otherprint()
+
+# file 2 - yo/importme.py
+from packagehelper import magicprint
+
+def otherprint():
+    magicprint()
+
+# file 3 - yo/packagehelper.py
+def magicprint():
+    print "hello"
+
+
+Finding the year of an i7 processor:
+- http://ark.intel.com/products/88200/Intel-Core-i7-6700T-Processor-8M-Cache-up-to-3_60-GHz?_ga=1.93071197.194975745.1483973655
+- look for Q3'15 => 2015
+
+Google Scholar
+- pdf links display to the right of the results
+- click the top-right arrow and go to settings; go to library links and search for "University of Waterloo"; this will give you UW access if you provide your student id
+
+
+Running "%matplotlib inline" in Jupyter makes it so that plt.show() is implicit when you run a cell containing plotting code.
+
+Use "%matplotlib notebook for interactive plots"
+
+Researching a topic
+- find 1st paper which discusses algorithm
+- find multiple papers describing the algorithm
+- email author regarding SPECIFIC (might not answer otherwise) questions (ie was reading your paper and I don't understand this step on this page).
+
+Lessons:
+- creating HipChat account on own
+- preparing tech for presentation
+- preconception against learning something (ie paper reading, Matlab)
+
+open-source ML algorithms:
+https://github.com/rushter/MLAlgorithms
+
+autograd - library which computes derivatives of python functions (including numpy)
+
+
+
+
+Overview
+https://www.tutorialspoint.com/android/android_environment_setup.htm
+
+Install JDK
+http://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html#CHDBADCG
+
+Setting PATH on Mac
+https://www.mkyong.com/java/how-to-set-java_home-environment-variable-on-mac-os-x/
+
+https://developer.android.com/studio/index.html#mac-bundle
+https://dl.google.com/dl/android/studio/install/1.1.0/android-studio-ide-135.1740770-mac.dmg
+https://dl.google.com/dl/android/studio/install/2.2.3.0/android-studio-ide-145.3537739-mac.dmg
+
+
+
+Activities -> screens
+Fragments  -> "sub-activities"
+
+Hamburger Menu
+http://www.androidhive.info/2013/11/android-sliding-menu-using-navigation-drawer/
+
+- start project with "Navigation Drawer Activity"
+
+
+
+Add to res/values/strings.xml:
+<string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+ 
+
+Add to res/values/dimens.xml
+<!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="nav_item_activity_titles">
+        <item>Home</item>
+        <item>Photos</item>
+        <item>Movies</item>
+        <item>Notifications</item>
+        <item>Settings</item>
+    </string-array>
+
+Add fragments under java/com....
+
+res/menu/activity_main_drawer.xml - renders hamburger menu
+
+
+res/layout/nav_header_main.xml - renders hamburger menu header
+
+Now we’ll create another layout file to add required Toolbar, FAB and FrameLayout. FrameLayout is used to load appropriate fragment when an item is selected from nav menu. Create a layout file named app_bar_main.xml under res ⇒ layout.
+
+Go to res/layout/app_bar_main.xml and paste:
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
+Also, remove "FloatingActionButton" to remove the floating email icon
+
+Go to activity_main.xml and add:
+ <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
+
+layout_weight: how much of the linear layout do you want to take (ie can do weights of 1 and 2)
+* set android:layout_width="0dp" or else you might get buggy widths
+
+Auto import: http://stackoverflow.com/questions/16615038/what-is-the-shortcut-to-auto-import-all-in-android-studio
+
+<CustomSpinner
+                android:id="@+id/spinner2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:entries="@array/destination_array"
+                android:background="@android:color/darker_gray" />
+
+
+Slide new Activity in and out: http://stackoverflow.com/questions/10243557/how-to-apply-slide-animation-between-two-activities-in-android
+Add this two file in res/anim folder.
+
+slide_in.xml
+
+            <?xml version="1.0" encoding="utf-8"?>
+            <translate 
+                  xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:duration="@android:integer/config_longAnimTime" 
+                  android:fromXDelta="100%p" 
+                  android:toXDelta="0%p">
+            </translate>
+slide_out.xml
+
+           <?xml version="1.0" encoding="utf-8"?>
+           <translate
+                 xmlns:android="http://schemas.android.com/apk/res/android" 
+                 android:duration="@android:integer/config_longAnimTime" 
+                 android:fromXDelta="0%p" 
+                 android:toXDelta="-100%p">
+          </translate>
+And write the following code in onCreate() method of next activity that you pass through the Intent.
+
+          overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
+
+Centring:
+<LinearLayout
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <ImageButton
+        android:id="@+id/btnFindMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/findme" />
+</LinearLayout>
+
+
+Introducing a button:
+<Button
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="Date"
+    android:layout_marginTop="20dp"
+    android:onClick="launchDatepicker" />
+
+// in the activity class:
+public boolean launchDatepicker(View view) {
+        // launch new intent instead of loading fragment
+        startActivity(new Intent(MainActivity.this, DatepickerActivity.class));
+        drawer.closeDrawers();
+        return true;
+    }
+
+gravity_layout vs. gravity
+- gravity="center" centres the contents
+- gravity_layout="centre" centres the contents in the parent
+
+
+Detecting swipes
+http://stackoverflow.com/questions/4139288/android-how-to-handle-right-to-left-swipe-gestures
+
+Bottom Navigation:
+https://material.io/guidelines/components/bottom-navigation.html#bottom-navigation-usage
+
+# run processes in background or overnight
+nohup ls &
+# creates nohup.out for output
+
+# nohup cancel
+echo $! > save_pid.txt
+kill -9 `cat save_pid.txt`
+rm save_pid.txt
+
+Unzip Recursively
+find . -name "*.zip" | while read filename; do unzip -o -d "`dirname "$filename"`" "$filename"; done;
+
+
+improve bottleneck of disk read by using a separate thread for that
+
+rsync -au hromel@ip:source destination
+# takes source directory and copies it UNDER (or inside) the destination folder
+# only updates
+# HOWEVER
+rsync -au hromel@ip:source/ destination
+# adding a single "/" means that everything in the source directory is copied to be
+# inside the destination folder
+
+
+
+# cp Command Experimentation (same behaviour for rsync)
+The following are equivalent:
+# copy contents of 'temp' into 'temp2'
+cp -r ~/temp/ ~/temp2
+cd ~/temp; cp -r . ~/temp2
+cd ~/temp; cp -r ./ ~/temp2
+
+# copy 'temp' folder into 'temp2'
+cp -r ~/temp ~/temp2
+
+
+Rubik's cube algorithm I found by playing around
+- reverses opposing top edge pieces
+- have main face on bottom, right 2, top 2, right 1 (clockwise when looking at it from the right), top 2, right 2, top 2, right 2 top 2, right 1, top 2, right 2
+
+
+Given vector, report the vector that fits in the middle (ie a "mean" in terms of angle deviation). You can do this by taking a sum of the vectors, s, then dividing by the average norm of the vectors (works best with unit vectors). I made this up.
+
+# this logs in as root
+sudo su
+
+for i, val in zip(valid_indices,data):
+    result[i] = round3(val)
+
+
+Using the 'global' keyword in python functions allows you to write to global variables within a function. Accessing global variables does not require this keyword.
+
+C++ macros can take multiline input without adding \ at the end
+#define hello(arr)
+hello(
+    hi >= yes
+    hello >= no
+)
+// this compiles!
+
+
+dplyr introduction: https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html
+
+
+np.array([1, 2, 3, 4]).reshape(-1, 2) # reshape with 2 columns
+
+map(float, my_list) works
+
+Are you considering coming back? Don't say no.
+
+
+Unseen
+https://www.quora.com/How-does-speech-recognition-work
+https://www.quora.com/How-can-I-learn-programming-for-voice-recognition
+https://www.quora.com/How-can-I-study-speech-recognition-with-machine-learning
+https://www.quora.com/How-do-I-start-learning-speech-recognition-algorithms
+
+Speech Recognition
+- https://www.quora.com/How-do-I-learn-Speech-Recognition
+- https://www.quora.com/What-are-the-best-algorithms-for-speech-recognition
+- https://www.quora.com/How-does-speech-recognition-work
+
+https://www.amazon.com/Spoken-Language-Processing-Algorithm-Development/dp/0130226165
+https://www.amazon.com/Automatic-Speech-Recognition-Communication-Technology/dp/1447157788/
+
+phoneme - Any of the perceptually distinct units of sound in a specified language that distinguish one word from another, for example p, b, d, and t in the English words pad, pat, bad, and bat.
+lexicon - The vocabulary of a person, language, or branch of knowledge.
+
+Linear Predictive Coding is used to model the speaker's voice-forming organs
+then used to model phonemes
+fed into HMM to form words
+HMM with phoneme level acoustic model and word level acoustic model
+
+Could do  MFCC (Mel Frequency Cepstral Coefficients) feature extraction
+then GMM-HMM (Gaussian Mixture Model – Hidden Markov Model) framework for comparison
+
+speech recognition have the following models:
+- Dictionary (lexicon)- A mapping between words and their pronunciation using phonemes
+- Acoustic Model - A database of probabilistic models that correlate phonemes to input speech utterance( what the user actually spoke) signals. Uses Hidden Markov Models (HMM) to associate an utterance signal to underlying phonemes.
+- Language Model: The corpus of acceptable phrases. Words from the dictionary are arranged into phrases in a language model.
+
+
+class Class()
+    @property
+    def inputs(self):
+        return self._inputs
+
+Data Compression Explained book: http://mattmahoney.net/dc/dce.html
+
+
+class A:
+    def hi(self):
+        self.yo = 90
+        
+a = A()
+b = 0
+def yo():
+    a.yo = 98 # no error
+    a.hi()   # no error
+    print b  # no error
+    b += 1     # error
+yo()
+
+Domain-Specific Languages by Martin Fowler
+- book which goes through techniques for designing DSLs
+
+
+Curtis talk about Json app
+Ruby on Rails gives scaffolding code
+ReactJS, Vue, Webpack
+DSL recommended instead of json
+ruby and scala can do DSLs
+Ionic builds on top of Cordova
+
+In python, l[-3:] gives the a list of the last 3 values of l.
+
+In python, you can do fn(a, *b, *c)
+
+
+Pandas get mean of nonnull values
+df["arr_delay"].dropna().mean()
+
+can do the following in python
+while (False
+        or True):
+    (stuff.hello()
+        .hello().hello())
+
+Python can do
+class A:
+    hi = 0
+    def __init__(self):
+        self.hi = 8
+
+# sklearn save models
+from sklearn.externals import joblib
+joblib.dump(clf, 'filename.pkl')
+clf = joblib.load('filename.pkl')
+
+# extract decision tree threshholds
+http://stackoverflow.com/questions/20224526/how-to-extract-the-decision-rules-from-scikit-learn-decision-tree
+
+
+HackerNews
+- NASA unveils database of images, videos, and audio
+- Removing home internet is the most productive thing I've done
+- AlphaGo event in China for May 23
+
+Sparse Autoencoder - autoencoder with more hidden units than input, but dropout is used to randomly turn off hidden units
+Denoising Autoencoder - autoencoder which encodes a noisy input and the decoded output has the noise removed
+
+You should add all the ip addresses to your /etc/hosts table then you can access the hosts by name instead of ip address.
+ 
+10.10.10.10 sandbox1 hadoop1 hdpmaster
+ 
+ssh sandbox1 will now work instead of ssh 10.10.10.10.
+
+Projects for automating the data science process: http://www.kdnuggets.com/2016/03/automated-data-science.html
+
+Deep Mind paper about memory
+
+Python Counter Object
+from collections import Counter
+def is_anagram(str1, str2):
+     return Counter(str1) == Counter(str2)
+
+Python permutation and combination iteration
+import itertools
+for perm in itertools.permutations([1, 2, 3, 4]):
+    print ''.join(str(x) for x in p)
+
+for c in itertools.combinations([1, 2, 3, 4, 5], 3):
+    print ''.join(str(x) for x in c)
+
+for c in itertools.combinations_with_replacement([1, 2, 3], 2):
+    print ''.join(str(x) for x in c)
+
+
+Can do dict(zip([1, 2, 3], [4, 5, 6]))
+
+itertools.groupby(zip(l, labels), key=lambda x: x[1]):
+
+label_to_index = dict([(label, i) for i, label in enumerate(distinct_labels)])
+
+s argument in matplotlib scatter determines the size of the dots
+
+
+Multithreading might not be the best for running on the server. What if you have multiple programs trying to use mutlithreading?
+
+http://book.pythontips.com/en/latest/one_liners.html
+
+swagger.io for APIs
+
+IDEA IntelliJ
+
+
+look at variance within a class
+- low variance means it's good
+
+arr = np.array([1, 2, 3])
+np.save("hello.npy", arr)
+arr = np.load("hello.npy")
+
+Linux zip yo.zip /home/hromel/stuff/ means that all folders in the /home/hromel/stuff paths will be copied too
+
+MySql
+mysql -u root -p
+
+mysql -u root -h ipaddress -p
+
+ALTER USER root IDENTIFIED BY 'new_password';
+create database henri
+use henri
+create table awesome (distance Decimal(5, 3), name varchar(20));
+insert into awesome (distance, name) values (0.0, "hi");
+show tables;
+select * from awesome;
+create table awesome2 like awesome;
+create table awesome3 SELECT * FROM awesome limit 100;
+show columns from awesome3;
+describe awesome3; /* shortcut for 'show columns from' */
+
+resting elbows on desk lead to holes in my hoodies
+
+Linux thread commands
+nohup ./my_script & # run my_script as a background process and detach; output sent to nohup.out in current folder
+top # print table of all processes
+kill thread_id
+ps # print all thread processes
+
+
+from PIL import Image, ImageOps
+img = Image.open(file_path)
+img.size
+# (600, 800, 4)
+ImageOps.grayscale(img).size
+# (600, 800)
+img = ImageOps.fit(img, size=(600, 450), bleed=0.125, Image.ANTIALIAS)
+# cut off border around image with width 0.125, then resize to (600, 450) using ANTIALIAS for interpolation
+np_img = np.asarray(img)
+img = Image.fromarray(np_img.astype(np.uint8))
+
+img.rotate(45).save("yo.png")
+
+img = Image.new('L', (600, 800), color=255)
+
+# Unknown
+# - grayscale back to colour
+
+
+Keras Conv2D(32, (3, 3), activation='relu')
+# stack of 32 results from the filter without padding (ie width decreases by 2)

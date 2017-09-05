@@ -1,0 +1,22 @@
+alias c.='cd ..; ls'
+alias c..='cd ../..; ls'
+alias aly='open -a TextEdit ~/.bash_profile'
+alias te='open -a TextEdit'
+alias gi='git init'
+alias subl='open "/Users/hromel/Library/Application Support/Sublime Text 3/Packages"'
+alias jup='cd ~/Documents/Jupyter/; source ../venv/bin/activate; jupyter notebook'
+alias ve='source ~/Documents/venv/bin/activate'
+alias de='deactivate'
+alias ga='git add -A'
+# alias gl='git ls-tree --full-tree -r HEAD' # list all files part of the repo
+alias nbpy='jupyter nbconvert --to script' # convert .ipynb file to .py file
+alias sl='echo "Oops..."; ls'
+alias st='git status'
+alias data='cd ~/Documents/Jupyter/kendata/'
+alias gity='cd ~/Documents/Jupyter/final/RotationMatrixGit/rotation_matrix/; ls'
+#alias backupy='scp . hromel@ip:~'
+#alias sshy='ssh userid@ip'
+alias rmy='rm -fr'
+# -f means never print, -r for recursion
+alias jupy='cd ~/Documents/Jupyter/'
+alias servy='echo userid@id:/home/hromel/'
