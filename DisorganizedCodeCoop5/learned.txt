@@ -1,0 +1,1267 @@
+chunks - combine words into chunks (ie "without sleeve")
+normalized - ie "without sleeve" to "sleeveless"
+
+learned
+- Keras fit_generator allows you to pass in “next_batch” function (runs in parallel)
+  - model.fit_generator(myGenerator(), …, where myGenerator uses yield to give batches
+- Tsv format
+- @functools.lru_cache(maxsize=128, typed=False)
+  # decorator to function with a memoizing callable that saves up to the maxsize most recent calls.
+- @classmethod means: when this method is called, we pass the class as the first argument instead of the instance of that class (as we normally do with methods). This means you can use the class and its properties inside that method rather than a particular instance.
+eg. Date.from_string('11-09-2012')
+- YAML vs pickle: 
+  YAML represents simple data types & structures in a language-portable manner
+  pickle can represent complex structures, but in a non-language-portable manner
+- avoid password with ssh
+  after you have a key, type "ssh-copy-id username@thehost" then your password
+- OOV - out-of-vocbulary word
+- hi = 98
+  python(f'{hi}') # prints 98
+- python dict .get(key, default)
+- pip uninstall deepengine (as opposed to the long git repo path)
+- from itertools import islice
+  list(islice(hi(), 2)) # first 2 elements of hi() via iteration
+
+/usr/local/bin/charm
+
+install XCode (should have a popup)
+
+install XCode commandline tools
+- xcode-select --install
+
+install brew
+- /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+- (command from https://brew.sh)
+
+put brew directory at the top of PATH variable
+- put the following in ~/.bash_profile: export PATH=/usr/local/bin:$PATH
+
+brew install python3
+
+Python 3 virtualenv
+- virtualenv -p python3 py3
+- virtualenv -p python3.6 py3
+
+PyCharm virtualenv
+- Preferences > Project > Project Interpreter
+- click gear at top right > click Add Local
+- paste "~/virtualenvs/py3/bin/python"
+- click OK
+
+change python path
+- export PYTHONPATH="PYTHONPATH:."
+- not permanent
+
+cloze task
+- predict removed word
+
+Keras
+- TimeDistributed - applies a same Dense (fully-connected) operation to every timestep of a 3D tensor.
+https://github.com/fchollet/keras/issues/1029
+eg. TimeDistributed(Dense(4))
+input_shape (None, n_timesteps, input_dim)
+output_shape (None, n_timesteps, 4)
+means
+- X - is a list of sequences
+- y - is a list of sequences (same size sequence as X[0]) ?
+(can apply after an LSTM using return_sequences=True)
+
+what about later layers?
+
+LSTM - must have 2D input_shape corresponding to (n_timesteps, input_size)
+- or 3D input_shape wrt (n_samples, timesteps, input_size)
+
+LSTM(10) output_shape (None, 10)
+LSTM(10, return_sequences=True) output_shape (None, n_timesteps 10)
+
+LSTM expects n_timesteps as dimension for input so we need return_sequences=True for an LSTM before another LSTM. That is,
+- LSTM(10, return_sequences=True)
+- LSTM(10)
+
+LSSTM reset state of network after each batch
+
+Dense(4, input_shape=(2,3,5)) output shape (None, 2, 3, 4)
+What does Dense(4, input_shape=(2,5)) do?
+
+LSTM unroll ????
+
+merge is a wrapper around Merge
+
+Embedding
+
+
+Examples
+a = Input((10,))
+b = Dense(10)(a)
+c = Dense(10)(a)
+d = merge([b, c])
+model = Model(a, d)
+
+Keras multiple outputs has LIST of NUMPY ARRAYS
+
+2 outputs in keras => test_on_batch gives 3 outputs (combined, output 1 loss, and output 2 loss)
+
+change loss_weights after load_model or compile
+- simply call compile with a new loss_weights value
+
+for layer in model.layers: # layers are not necessarily sequentially stacked
+    print(layer, layer.trainable, layer.name, layer.trainable)
+    layer.trainable = True
+    print(" ", layer.input, layer.input_shape)
+    print(" ", layer.output, layer.output_shape)
+    w = layer.get_weights()
+    layer.set_weights(w)
+
+# CAUTION trainable must be set by layer!
+(ie a = Embedding()... a.trainable = False does nothing and does not through an error)
+
+fit_generator takes in a generator which needs __next__ implemented (or just pass iter(generator))
+- fit_generator uses multithreaded enqueuer
+
+keras merge layers don't need TimeDistributed
+
+naming convention is unknown (not just the order of each layer in the code)
+
+get name of next layer - in model.summary()
+
+for loading pretrained weights into a layer which is wrapped in TimeDistributed, specify the TimeDistributed name (not what it wraps around)
+
+To load custom keras variables, redefine it and
+m = load_model('deleteme.model', custom_objects={'alpha': alpha})
+
+keras variable get value: K.variable(0.5).eval() # gives numpy array with 0.5
+# CAUTION: if you're using the GPU a cuda ndarray might be returned which is not serializable
+
+keras optimizer params can be in a different order than trainable weights
+
+
+
+out of memory!! -> use sparse_categorical_crossentropy
+htop # show all processes like top
+ps # list all processes
+
+gpu is slow to start (needs to transfer to GPU memory?)
+
+https://www.digitalocean.com/community/tutorials/how-to-use-sshfs-to-mount-remote-file-systems-over-ssh
+sudo sshfs -o allow_other,defer_permissions,IdentityFile=~/.ssh/id_rsa henri@192.168.0.109:/home/henri/github /mnt/pycharmmnt
+sudo umount /mnt/pycharmmnt
+
+
+
+
+np.full((5, 6), 7)
+
+use reader.seek(0) do reset reader in terms of iterating
+for line in reader:
+    pass
+reader.seek(0)
+for line in reader:
+    pass
+
+infinite iterator needs class instance instead of function
+
+NN hyperparameter tuning
+- smaller batch_size yields faster training
+- increase epoch size for multipass data for smoother loss curve
+
+
+
+import os
+def get_folder_size(start_path = '.'):
+    # : returns: size in Bytes
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(start_path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            total_size += os.path.getsize(fp)
+    return total_size
+
+print(get_folder_size() / 1000 / 1000)
+
+Display NVIDIA GPU usage with following command:
+- once: nvidia-smi
+- continuous: watch -n 1 nvidia-smi
+
+Squash last (say) 5 commits: git rebase -i "HEAD~5"
+
+Python tuple comparison
+- https://stackoverflow.com/questions/5292303/how-does-tuple-comparison-work-in-python
+- compared lexicographically and [1, 2] < [1, 2, 3] as the first list is smaller in size
+
+Pickle Trick - append to pickle file
+with open('high.pkl', 'ab') as f:
+    pickle.dump({"hello": 9}, f)
+    pickle.dump({"world": 3}, f)
+
+Load all from pickle (from the above)
+with open('high.pkl', 'rb') as f2:
+    l = []
+    try:
+        while True:
+            l.append(dill.load(f2))
+    except:
+        pass
+
+Python Quirks
+# this works
+class A:
+    def __init__(self):
+        A.hi()
+        self.hi()
+    
+    @classmethod
+    def hi(cls):
+        print("hi")
+
+A()
+
+
+len(list(..)) is O(1) in python
+- more python time complexity: https://wiki.python.org/moin/TimeComplexity
+
+make custom class convertible to a list
+- implement __iter__ function
+
+List of AGI problems
+- https://www.reddit.com/r/MachineLearning/comments/72dus0/discussion_serious_what_are_the_major_challenges/
+- https://www.degruyter.com/view/j/jagi.2014.5.issue-1/jagi-2014-0001/jagi-2014-0001.xml
+- https://medium.com/ai-roadmap-institute/unsolved-problems-in-ai-38f4ce18921d
+- roadmap: https://docs.wixstatic.com/ugd/2f0a43_091d76d2b0354b0db4d88c3a57fdf76d.pdf
+
+python command line library click
+
+
+# BAD CLICK VVVVVVVVVVVVV
+
+import click
+
+name = 0
+print('printed 1st')
+
+@click.group()
+def main():
+    print("printed 2nd")
+
+
+@main.command()
+@click.argument('name')  # add the name argument
+def hello(**kwargs):
+    global name
+    name = kwargs['name']
+    print("printed 3rd")
+
+@gmain.command()
+@click.argument('name')
+def goodbye(**kwargs):
+    print('Goodbye, {0}!'.format(kwargs['name']))
+
+if __name__ == '__main__':
+    main()
+    print("not printed")
+
+print("not printed")
+
+# GOOD CLICK ^^^^^^^^^^
+
+import click
+
+
+
+@click.command()
+@click.option('--verbose', is_flag=True, help="Will print verbose messages.")
+@click.option('--name', '-n', multiple=True, default='', help='Who are you?')
+@click.argument('country')
+def cli(verbose,name, country):
+    """This is an example script to learn Click."""
+    if verbose:
+        click.echo("We are in the verbose mode.")
+    click.echo("Hello {0}".format(country))
+    for n in name:
+        click.echo('Bye {0}'.format(n))
+
+
+python imports within a function
+- https://stackoverflow.com/questions/3095071/in-python-what-happens-when-you-import-inside-of-a-function
+- doesn't reimport every time the function is run
+- only imported when function is run
+- style guides advise against it
+
+
+You can type simple (ie ls) commands directly into a Jupyter code cell
+
+# Works for both python 2 and 3
+class Yo:
+    def __init__(self, a=0, b=3):
+        self.a = a
+        self.b = b
+
+class A:
+    def __init__(self):
+        pass
+    def config(self, ModelType, **kwargs):
+        yo = ModelType(**kwargs)
+        print(yo.a, yo.b)
+
+a = A()
+a.config(Yo, a=9, b=4)
+
+Delayed assert: http://pythontesting.net/strategy/delayed-assert/
+
+to save and load an object, you can dump it to json, then load using kwargs
+
+change python file while running
+- python compiles to .pyc then runs that
+- changing the .py file will do nothing
+
+change python file while running then run that
+
+Improving GPU training speed
+- CPU-disk is a bottleneck
+  - try loading a group of batches from the disk at once into memory, then use that to feed into the GPU
+  - ideally, load from disk in a separate process
+- memory spikes of 4GB is safe with 12 GB of memory
+- use float32 instead of float64 (almost 2x speed up)
+  - cs 231n recommends float32 b/c of space and time
+- if training a particular part of the model, you can just train that then set_weights later
+
+- What if GPU usage is 0% for longer periods of time?
+
+Adeptmind *****
+getattr(importlib.import_module(module_name), class_name)
+
+python flooring division for floats (ie 5.0 // 2.4 # 2.0)
+
+IMO best way to check if GPU being used
+- nvidia-smi and check process id's and verify one corresponds to the python process
+
+Options to Check tensorflow using GPU
+1 - from tensorflow.python.client import device_lib
+    print(device_lib.list_local_devices())
+2 - sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+
+'flake .' checks for code formatting
+
+
+python quirk
+a = iter(range(10))
+b = a
+print(next(a), next(b), next(a), next(b))
+# 0 1 2 3
+
+
+grep -Eo 'Henri.+'
+
+sed 's/hi/there/' # substitute hi for there (once there if there is one in the line)
+# hi can be any regular expression
+sed 's/hi/there/;s/hi/there/' # substitute hi for there (twice)
+sed 's/^/prefix/' # append prefix to beginnings of lines
+sed 's/$/suffix/'
+
+
+mutable default parameters in python
+- 1 is created for the function itself which is reused any time the function is called
+- eg.
+def append(number, number_list=[]):
+    number_list.append(number)
+    print(number_list)
+
+
+python quirk
+f = open(...)
+pickle.dump(time.time() - self.t0, f)
+# reading the file may yield nothing
+f.close()
+# now reading yields results
+
+Try SqueezeNet https://shuaiw.github.io/2017/03/09/smaller-faster-deep-learning-models.html
+- crushes ResNet in speed (3x faster)
+- lr = 1e-4 good
+
+PreLU
+f(x) = x > 0 ? x : ax, where a is learnable
+
+python control CPU and memory usage: http://www.marinamele.com/7-tips-to-time-python-scripts-and-control-memory-and-cpu-usage
+- python -m cProfile -s cumulative timing_functions.py
+  - no decorator required
+- python -m memory_profiler timing_functions.py
+  - need to decorate functions with @profile so it can display
+  - need to install with:
+    pip install memory_profiler
+    pip install psutil
+- kernprof -l -v timing_functions.py
+  - need to decorate functions with @profile so it can display
+    pip install line_profiler
+
+
+nice values
+- value from -20 to 19
+- default 0
+- determine priority for the task (lower = more priority)
+- only root can assign -ve nice values
+- set nice value of existing processes 'renice 10 -p 21827'
+
+
+
+Can run 1 command on remote server
+ssh userid@ip 'echo $PATH'
+
+You can manually edit the keras source code in the virtual environment and the changes will be visible
+
+using tensorflow-gpu fills the gpu memory and cancels existing processes
+To prevent this:
+# for tensorflow
+import tensorflow as tf
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.3)
+sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+Alternatively, look at allow_growth in tensorflow GPUOptions https://github.com/tensorflow/tensorflow/blob/08ed32dbb9e8f67eec9efce3807b5bdb3933eb2f/tensorflow/core/protobuf/config.proto
+
+# for keras
+import tensorflow as tf
+from keras.backend.tensorflow_backend import set_session
+config = tf.ConfigProto()
+config.gpu_options.per_process_gpu_memory_fraction = 0.3
+set_session(tf.Session(config=config))
+
+
+
+Testing Tensorflow gpu
+# method 1
+import tensorflow as tf
+with tf.device('/gpu:1'):
+    a = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[2, 3], name='a')
+    b = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[3, 2], name='b')
+    c = tf.matmul(a, b)
+
+with tf.Session() as sess:
+    print (sess.run(c))
+
+# method 2
+sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+# see which devices are used
+
+# regex substitute
+import re
+print(re.sub(r"[^\n]+\r", "", yo))
+
+pytest testing a function with multiple inputs
+# for loop is bad because an exception could make it stop early
+@pytest.mark.parametrize(
+    'number, word', [
+        (1, '1'),
+        (3, 'Fizz'),
+        (5, 'Buzz'),
+        (10, 'Buzz'),
+        (15, 'FizzBuzz'),
+        (16, '16')
+    ]
+)
+def test_fizzbuzz(number, word):
+    assert fizzbuzz(number) == word
+
+@pytest.fixture(name='yo')
+def get_yo():
+    return "yo"
+
+class TestModel:
+    @pytest.mark.parametrize(
+        'number, word', [
+            (1, '1')
+        ]
+    )
+    def test_fit_generator(self, yo, number, word):
+        pass
+
+
+@pytest.mark.slow
+@pytest.mark.timeout(60)
+
+CS 227 Knowledge Representation
+- 
+- object-oriented frames
+- description logic and concepts
+
+- A reasoning procedure is intractable if its execution time scales exponentially with the size of the KB
+- so far key reasoning operations are subsumption. classification, inheritance, default values
+- DL ALC
+  - Terminology axioms (TBox T)
+  - Assertional Axioms (ABox A)
+  - Knowledge Base (KB) is an ordered pair (T, A)
+- hybrid reasoning - incorporate efficient reasoners
+- semantic attachment - attach procedures to functions and predicates
+- Tableau algorithms - transform entailment to KB unsatisfiability, start with facts, use expansion rules, construction fails if obvious contradiction
+  - currently the most popular technique
+  - negate premise and derive contradiction
+- social context (eg. web)
+  - Wikipedia search
+  - semantic web (eg links)
+  - RDF data model (what is it?)
+lecture 8a
+- Horn Clauses = at most 1 +ve literal
+  - positive clause (1 +ve literal)
+  - negative clause (no +ve literals)
+[~p1, ~p2, p3] means:
+ - ~p1 or ~p2 or p3
+ - (p1 and p2) ⊃ p3
+ - p1 and p2 => p3
+- resolution - given 2 disjunctive clauses, eliminate conflicting literals to form 1 clause
+- only 2 possibilieis: neg + pos = pos or pos + pos = pos
+- from any clause, you can form a tree of resolutions
+- it is possible to rearrange derivations of negative clauses so that all new derived clauses are negative
+- take negative derived clause, a parent, must be negative, so we go backwards until we only use clauses from the original set
+- SLD Resolution
+- Back-chaining procedure (an algorithm)
+- back-chaining problems:
+  - possible infinite loop (ie p or ~p)
+  - can be exponential in # of clauses
+- forward-chaining - linear # of iterations for KB of horn clauses
+  - main idea: mark atoms as solved
+  - can be done in linear time
+
+8b
+reasoning is like finding efficient solutions to problems
+issue: both assumptions in hyp don't need to be checked for all x
+- cut symbol - attempt goals in order, but if all Ti succeed, then commit to Gi
+  ie T1 ... Tm ! G1 ... Gn
+what do you mean commit?
+- cut symbol can be used as if-then-else
+G :- P ! Q
+G :- R
+(if P then use P else use R)
+Planner Language
+1. DB of facts
+2. if-added, if-removed procedures consisting of
+ - body: program to execute
+ - pattern for invocation
+3. Each program statement can succeed or fail
+ - (goal p), (assert p), (erase p)
+ - (and s ... s), statements with backtracking
+ - (not s) negation as failure
+ - (for p s) do s for every way p succeeds
+ - (finalize s) like cut
+ - a lot more, including all of lisp
+
+9a - Production Rule Systems
+P => Q leads to the following reasoning
+(assert P) => (assert Q)
+(assert Q) => (assert P)
+Production Systems
+- working memory
+- production rule
+IF conditions THEN actions
+- basic cycle of operations
+  1. recognize (find rules)
+  2. resolve (determine which rules fire)
+  3. act (perform changes)
+- working memory elements (WME)
+- rule actions: ADD, REMOVE, MODIFY
+  (applied to WME)
+- OPS5, SOAR
+- OPS5
+  - discard rules used already
+  - order remaining rules in terms of recency of WME matching 1st condition (and then 2nd condition)
+- early systems spent 90% of the time matching
+- RETE procedure - organize sequence of tests to determine the rule like a graph
+
+9b
+Functional Specification of a KB
+T Box
+- tell - take a symbol and associates it with a T box term
+- ask - take 2 terms and ask if they are disjoint or one subsumes the other
+A Box
+- tell - tell A box a sentence and asserts it to be true
+- ask - ask whether sentence is true
+
+F-Logic, SILK
+Structural inheritance - inheritance of the signature of a method
+Behavioral inheritance - inheritance of the definition of a method
+(F-Logic syntax)
+HiLog: Higher Order Logic
+
+Frames and description logics have attractive properties, but have classes of knowledge they can't represent
+SLIK/F-Logic is a sota representation language (according to the 2011 class) that provides one possible attractive design for the combination
+
+- bookmark: 10/19
+
+
+
+Facial Recognition
+DeepFace
+- uses SVRs (support vector regressors) and LBPs (local binary patterns)
+
+Local Binary Patterns
+https://www.pyimagesearch.com/2015/12/07/local-binary-patterns-with-python-opencv/
+- convert to grayscale
+- for each pixel look at the 8 neighbours clockwise (or counterclockwise as long as it is consistent)
+- mark each number as 1 if the pixel has a value larger than the centre pixel and 0 otherwise
+- this forms an 8 bit number for each pixel
+- compute a histogram over the whole image wrt the 8 bit number frequencies
+- this gives an 256 dimensional vector
+- normalize the vector (ie divide by the norm to make it a unit vector)
+
+extensions
+- to account for various scales, generalize to radius circle r and p points in a symmetric neighbourhood
+- uniformity concept 
+
+scikit-learn and OpenCV has an implementation of LBPs
+
+to do:
+- finish article
+- understand uniformity
+- support vector machine
+- support vector regressors
+
+taxonomy vs ontology
+taxonomy - is usually only a hierarchy of concepts (i.e. the only relation between the concepts is parent/child, or subClass/superClass, or broader/narrower)
+ontology - arbitrary complex relations between concepts can be expressed too (X marriedTo Y; or A worksFor B; or C locatedIn D, etc )
+
+
+Paper Summary: Question Answering on Knowledge Bases and Text using Universal Schema and Memory Networks
+- https://arxiv.org/pdf/1704.08384
+- accuracy: 45.9
+- data set: SPADES (Bisk et al., 2016)
+- knowledge base: FreeBase (Bollacker et al., 2008), has triples (s, r, o) wrt subject, relation, object
+- universal text source: ClueWeb 
+- prerequisite terms: (Gabrilovich et al., 2013)
+universal schema (Riedel et al., 2013)
+Memory networks
+- referenced data sets
+SQuAD (Rajpurkar et al., 2016)
+WebQuestions (Berant et al., 2013) is widely used for QA on Freebase
+WikiMovies dataset (Miller et al., 2016)
+- architecture: TODO
+
+
+software design
+- _check_config which appends all checks to a list and asserts that the list is empty
+- DataStream classes should be Keras Sequential instead of Recursive (easier to debug)
+
+
+Python Code Conventions
+- no nested functions
+- logging instead of print
+
+
+Linux:
+- ctrl + U: clear command typed so far
+- ctrl + A: go to start of command typed so far
+
+
+MongoDB
+mongo # command to start mongo
+show database # list databases
+show dbs # short form of 'show database'
+use [db name]
+show collections # show 'tables' in database currently in use
+db.products.findOne() # show one entry in the 'products' table
+db.products.count() # show # of entries in the 'products' table
+
+PyMongo
+# pip install pymongo
+from pymongo import MongoClient
+db_name = 'amazon'
+db = MongoClient()[db_name]
+products_table = db['products']
+# print all entries in products_table
+for point in products_table.find():
+    print(point)
+# print "hello" entries in products_table where "hello" key has value "world"
+for point in products_table.find({'hello': 'world'}):
+    print(point["hello"]])
+
+
+chsh -s /bin/bash
+put aliases in ~/.bash_rc
+
+variational autoencoder resources
+- https://wiseodd.github.io/techblog/2016/12/10/variational-autoencoder/
+- https://arxiv.org/pdf/1606.05908.pdf
+
+Information Content
+- http://homepages.ulb.ac.be/~dgonze/TEACHING/info_content.pdf
+
+
+PRINT THE FIRST DATA STREAM EXAMPLE!!!!!!!
+- spelling correction class error
+
+https://arxiv.org/pdf/1704.03617.pdf
+distillation - transfer knowledge to a smaller model
+progressive NNs - train NN 1, fix weights
+- for task 2, create NN 2 (copy of NN 1) where inputs of all layers in NN1 can be used as inputs to layers in NN 2
+Learning without forgetting
+- train on task 1 to get model 1
+- record outputs of task 2 wrt model 1 output as data set 3
+- train on data set 2 and 3
+(learnable ensembling)
+
+weight perturbation - wij chanages by (L(wij + pij) - L(wij)) / pij
+- https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es2001-36.pdf
+- wij - weight from neuron i to neuron j
+
+DeepMind paper
+- learn theta A (mode)
+- get F
+  - F is a diagonalized (remove non diagonal entries) of the Laplace approximation
+- Hessian of -log p(theta|D_A) evaluated at mode
+- (formula)
+
+Laplace approximation
+- http://edwardlib.org/tutorials/map-laplace
+- approx dist p with Gaussian where:
+  - mean = mode of distribution
+  - variance (inverse of Hessian of negative logp eval at mode)
+    - why inverse and not actual Fisher information matrix?
+
+Fisher information
+- https://jmanton.wordpress.com/tag/fisher-information-matrix/
+- entry ij is E[d/dtheta_i(logp) * d/dtheta_j(logp)]
+  - expectation over what? -> x
+
+Observed Fisher Information Matrix
+- negative of 2nd derivative matrix (Hessian) of a loss evaluated at theta*
+  - what is the loss?
+    - paper uses p(theta|D_A)?
+
+VAE Tutorial
+https://arxiv.org/pdf/1606.05908.pdf
+p(X|z) will be almost zero, so we only judge based on the z sampled (smaller sample space)
+second term on left is pulling Q(z|X) to p(z|X)
+first term more tricky
+- could approximate expectation with multiple samples, but that would be expensive
+image 
+
+git commit big file
+- git lfs track bigfile.txt
+  - this adds "bigfile.txt filter=lfs diff=lfs merge=lfs -text" to the .gitattributes file
+- now you can add and push!
+- Note: when you push, big files will be replaced with small pointer files
+  - you can 
+
+
+undercomplete autoencoder - hidden layer is smaller than input layer
+lateral - from the sides
+
+Expert Gate: Lifelong Learning with a Network of Experts
+https://arxiv.org/pdf/1611.06194.pdf
+1 layer under-complete autoencoder
+- model with the lowest reconstruction error used like a switch
+- use autoencoder errors and put in softmax (3.2)
+- assume we do not have access to data from old tasks
+- task relatedness
+  - take new task validation error
+  - E_old = reconstruction error on new task data using old autoencoder
+  - E_new = "     " new autoencoder
+  - 1 - (E_old - E_new) / E_new
+- task related-ness used to choose between fine-tuning or learning-without-forgetting
+- if relatedness is beyond a threshold, use LwF (otherwise 
+- (pseudocode given)
+(stopped reading after first experiment results)
+
+hyperparameters
+- rel-threshold = 0.85
+- autoencoder hidden size = 100
+
+Put .flake file in home git repo directory with:
+[flake8]
+max-line-length = 99
+ignore=N805,E226
+
+python slice last dimension arr[...,i]
+- alternatively use
+  idx = [slice(None)] * (myarray.ndim - 1) + [i] 
+  my_slice = myarray[idx]
+
+Paper presentation lessons
+- incorrect explanations
+- not explaining tables
+
+h5py
+- chunking - stored as a B-tree to allow resizing
+  - otherwise, stored contiguously
+
+numpy size: use arr.nbytes
+
+Quora Question Limit: 100 per day, free cost
+StackOverflow:
+- 50 questions over any 30-day period
+- six questions over any 24-hour period
+- one question over any 30-second period
+- users with less than 125 reputation can only post questions every 90 minutes
+- https://meta.stackexchange.com/questions/4359/is-there-a-limit-on-how-many-questions-i-can-ask
+
+Jupyter extensions
+pip install jupyter_contrib_nbextensions
+jupyter contrib nbextension install --user
+load jupyter > Nbextensions tab > click on the extension
+For "Initialization cells":
+- View > Cell Toolbar > Initialization Cell
+- Check appropriate boxes
+- View > Cell Toolbar > None
+
+Make in python
+- https://krzysztofzuraw.com/blog/2016/makefiles-in-python-projects.html
+- eg. make clean-pyc, make docker-run, make test
+
+Combine files: cat file1 file2 > combined
+
+Main takeaways from this coop
+- 10 minute plans
+- come in early to work to learn
+
+PyCharm reformat: Option + Com + L
+
+Python defaultdict
+from collections import defaultdict
+d = defaultdict(list) # input must be a function (not a value)
+d['hi'].append(0)
+
+
+TensorBoard
+to install, it comes with tensorflow
+# DO NOT DO pip install tensorboard
+tensorboard --logdir=/Users/hromel/tf_logs/ --port 6006
+load "http://localhost:6006" in the browser
+
+
+pip install tangent
+def f(x):
+    return x * 2
+df = tangent.grad(f, verbose=1)
+# adding verbose = 1 prints equivalent python code for the df function
+
+dict keys order
+https://stackoverflow.com/questions/835092/python-dictionary-are-keys-and-values-always-the-same-order
+If items(), keys(), values(),  iteritems(), iterkeys(), and  itervalues() are called with no intervening modifications to the dictionary, the lists will directly correspond.
+
+** regularizer arguments
+Embedding embeddings_regularizer
+GRU recurrent_regularizer kernel_regularizer bias_regularizer activity_regularizer
+LSTM recurrent_regularizer kernel_regularizer bias_regularizer activity_regularizer
+Dense kernel_regularizer bias_regularizer
+
+Uncertainty
+- dropout 0.5, sample 100 during test and calculate mean and variance
+  - average entropy across samples
+  - total variance over output dimensions
+  - total variance ovver layer before softmax output
+- concrete dropout - make dropout prob p learnable and add 2 extra terms input_dim * (plog(p)+(1-p)log(1-p)) and sum(square(weights))/(1-p)
+- weight uncertainty in NNs
+  - assume weights are just mu's and sigmas (every weight is a Gaussian)
+  - use a different cost fn
+Plot
+- x-axis - # of examples from the whole test set
+- y-axis - accuracy
+- decide whether we give an example to an agent to label
+- normal line - go through each example (in a random order) and give it to the agent to label
+- uncertainty curve - go through each example and give it to an uncertainty model, sort by uncertainty, then give examples to agent
+
+
+Distributed Crawler basic layout
+- database: manage data and give requests to the spider based on the priority score
+- spider: given a url, extract links and other information, and return to the database
+  - based on scrapy
+- strategy: given a url, assign a priotity score
+
+brevity means consiseness
+
+Permuted MNIST - each task is a permutation of mnist pixel inputs
+
+Website for determining whether emails have been compromised
+- https://haveibeenpwned.com
+
+Cool paper: Pose Guided Person Image Generation
+
+Google Released a Network which converts into semantic graph representations.
+SLING: A Natural Language Frame Semantic Parser:
+- https://research.googleblog.com/2017/11/sling-natural-language-frame-semantic.html
+- https://arxiv.org/abs/1710.07032
+
+@cur_loss.setter
+
+Variation of Hyperparameter Search
+- https://en.wikipedia.org/wiki/Coordinate_descent
+
+Python check version
+import tensorflow
+tensorflow.__version__
+
+!!!!!!!!!!
+source command runs a script in the shell without creating child processes
+
+
+!!!!!!!!
+np.sort(a, axis=0) reorders all columns to be sorted (ie row instances ARE NOT PRESERVED)
+
+
+numpy.argsort returns the indices that would sort the array
+
+Jupyter: Shift + Tab over function reveals details
+
+Chapter 8 deeplearningbook.org
+E_((x,y)~p_data) [ L(f(x), y)] is known as risk
+- uses the true distribution
+- if we had it, we could just do optimization
+- when we don't know it, but we have a set of training examples, it is an ML problem
+
+We replace p with the empirical distribution defined by the training set and minimize
+empirical risk = 1/m * sum(L(F(x), y)
+
+empirical risk minimization - training process based on minimizing this average training error
+0-1 loss - L(y^, y) = I(y^ != y)
+
+surrogate loss function - ie negative log-likelihood typically used instead of 0-1 loss
+surrogate loss advantages
+- handle that 0-1 loss has no derivative
+- improve robustness by pushing classes apart
+
+generalization error when x and y are discrete: sum_x(sum_y(p_data * L(f(x), y)))
+
+Challenges in Neural Network Optimization
+- Ill-Conditioning
+
+Local minima
+model identifiability - identifiable if a sufficiently large training set rules all but one theta value
+weight space symmetry - nonidentifiability caused by how rearranging units for say fully connected layers preserves the same functionality
+other nonidentifiability can happen with say relu where you scale input by a then scale output by 1/a
+
+nonidentifiability means usually infinite local minima
+
+
+Cliffs
+- problem: can cause large weights to move far together
+- solution: gradient clipping
+- usually found in RNNs since it involves multiple multiplications
+
+
+multitail - linux command which allows you to wat multiple tails of files
+
+Random Trees
+Sources:
+- http://pages.cs.wisc.edu/~matthewb/pages/notes/pdf/ensembles/RandomForests.pdf
+- http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+bootstrap sample - sample from some set with replacement
+S = training set of (x1, y1), ...
+F = features
+B = # of trees in forest
+H = []
+for i = 1 to B:
+    Si = bootstrap sample from S
+    h = RandomizedTreeLearn(Si, F)
+    H = H + [h]
+function RandomizedTreeLearn(S, F)
+    for each node:
+        f = small subset of F
+        split on best feature in f
+    return learned tree
+
+Questions:
+- how do we choose Si?
+  - sklearn has bootstrap = True by default and |Si| = |S|
+- how do we choose f?
+  - random subset
+  - sklearn, uses max_features = n_features by default
+
+density estimation - construction of an estimate, based on observed data, of an unobservable underlying probability density function
+
+Aleatoric uncertainty captures noise inherent in the observations
+- eg. occlusions
+Epistemic uncertainty accounts for our ignorance about which model generated our collected data
+- eg. safety-critical applications
+
+
+ewatch 66
+etail 65 100
+erun 66
+eset 66 python ....
+eps # exp 45 PID 4500
+
+tmux cheatsheet
+# session management
+tmux ls (or tmux list-sessions)
+tmux new -s session-name
+Ctrl-b d Detach from session
+tmux attach -t [session name]
+tmux kill-session -t session-name
+
+Ctrl-b c Create new window
+Ctrl-b d Detach current client
+Ctrl-b l Move to previously selected window
+Ctrl-b n Move to the next window
+Ctrl-b p Move to the previous window
+Ctrl-b & Kill the current window
+Ctrl-b , Rename the current window
+Ctrl-b q Show pane numbers (used to switch between panes)
+Ctrl-b o Switch to the next pane
+Ctrl-b ? List all keybindings
+
+# moving between windows
+Ctrl-b n (Move to the next window)
+Ctrl-b p (Move to the previous window)
+Ctrl-b l (Move to the previously selected window)
+Ctrl-b w (List all windows / window numbers)
+Ctrl-b window number (Move to the specified window number, the
+default bindings are from 0 -- 9)
+
+# Tiling commands
+Ctrl-b % (Split the window vertically)
+CTRL-b " (Split window horizontally)
+Ctrl-b o (Goto next pane)
+Ctrl-b q (Show pane numbers, when the numbers show up type the key to go to that pane)
+Ctrl-b { (Move the current pane left)
+Ctrl-b } (Move the current pane right)
+
+# Make a pane its own window
+Ctrl-b : "break-pane"
+
+# add to ~/.tmux.conf
+bind | split-window -h
+bind - split-window -v
+
+tmux
+session of windows of panes
+start tmux session: 
+- tmux
+- tmux new -s session-name
+detach from session: Ctrl + d
+attach to session: tmux attach -t session-name
+kill session: tmux kill-session -t session-name
+list sessions: tmux ls
+kill window: tmux kill-window -t window-number
+
+** pane
+kill pane: ctrl-b + x
+
+
+python quirks: [1, 2, 3][1:10000] gives [2, 3]
+np.array([1, 2, 3])[2:10000] gives np.array([3])
+
+lr, batch_size = [d[k] for k in 'lr,batch_size'.split(',')]
+
+
+
+** Fisher Matrix round 2
+* Intuition of Fisher Information: https://math.stackexchange.com/questions/265917/intuitive-explanation-of-a-definition-of-the-fisher-information
+want theta for max likelihood
+equate score (derivative to 0)
+what to know how accurate it is
+- flat => uncertain because ...
+- peaked => fairly certain because ...
+
+
+Python trick:
+it = iter((i, i+1, i+2) for i in range(10))
+list(zip(*it))
+
+Calculating gradients for each example efficiently.
+Ian Goodfellow's solution in tensorflow: https://github.com/tensorflow/tensorflow/issues/4897#issuecomment-253056458
+
+import string
+LETTERS = string.ascii_lowercase
+
+click for experiments
+
+# Call with python file.py
+# it works
+import click
+
+def experiment(**kwargs):
+    print(kwargs)
+
+@click.command()
+@click.option('--save-plots', type=bool, default=False)
+def cli(**kwargs):
+    # "save-plots" converted to "save_plots"
+    experiment(**kwargs)
+
+if __name__ == '__main__':
+    cli()
+
+'''
+# other possible syntax
+# call with python file.py yo
+
+@cli.command()
+def yo():
+    pass
+'''
+
+
+a = np.array([1, 2, 3, 4])
+a[[(1, 2)]] = 1
+a[np.array([1, 2])] = 1
+
+
+API Design article: https://blog.keras.io/user-experience-design-for-apis.html
+
+htop by user
+- "htop -u henri"
+- "htop" then press u and use the arrows to select the user
+  - for me, I can just type åu, h, enter
+
+keras compile
+- resets optimizer
+
+
+# python
+def is_callable(obj):
+    return callable(obj)
+
+
+
+python function documentation
+"""
+This does stuff.
+
+:param: my_input: this is input
+:return: an output thing
+"""
+
+ubiquitous - present, appearing, or found everywhere.
+
+
+git show --name-only
+
+
+π = pi
+α = alpha
+ß = beta
+ø,Ø = empty set
+∑ = capital sigma
+∆ = delta
+√ = square root
+µ = mu
+≤ = less than or equal to
+≥ = greater than or equal to
+∂ = partial derivative
+∞ = infinity
+≠ = not equal
+± = plus minus
+ɛ = epsilon
+∈ = element of
+∉ = not element of
+θ = theta
+λ = lambda
+
+
+
+vi vertical edit
+- ctrl + v, shift + i, 
+
+Improve spelling correction
+- modify the sample weight to account for stop words
+  - weight by 1 / log(frequency of word)
+- train longer for this particular task
+
+delay command: sleep 3; echo "hi"
+
+zip cannot be iterated through twice
+
+Untested Jupyter on a server:
+jupyter notebook --no-browser --port=8889
+ssh -N -f -L localhost:8888:localhost:8889 remote_user@remote_host
+
+
+Wishlist
+- 2 Starcraft
+  - 2017 Starcraft: https://arxiv.org/pdf/1703.10069.pdf
+  - 2013 Starcraft survey: https://www.cs.mun.ca/~dchurchill/pdf/starcraft_survey.pdf
+- 2 3D face
+  Facebook and Two Minute Papers
+- ocr
+- body pose estimation
+- speech recognition
+- 2 DeepMind locomotion
+  (first?) Emergence of Locomotion Behaviours in Rich Environment
+- http://www.marinamele.com/7-tips-to-time-python-scripts-and-control-memory-and-cpu-usage
+- 3D facial reconstruction: https://arxiv.org/pdf/1703.07834.pdf
+- knowledge representation course
+- https://perceptual.mpi-inf.mpg.de/files/2016/01/wood16_etra.pdf
+  - Basel Face Model
+- Neural Turing Machine: https://arxiv.org/abs/1410.5401
+- Segmentation architecture: https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Long_Fully_Convolutional_Networks_2015_CVPR_paper.pdf
+- GAN for image: Improved Techniques for training GANs by OpenAI
+- video segmentation: https://medium.com/@eddiesmo/video-object-segmentation-the-basics-758e77321914
+
+done
+- Magenta repetition reward
+- Apple eye image to image: https://machinelearning.apple.com/2017/07/07/GAN.html
+- variational autoencoder in deeplearningbook.org
+- visualizing conv nets: https://rajpurkar.github.io/mlx/visualizing-cnns/
+  - approach 1: derivative of class score wrt each input pixel
+  - approach 2 (preferred): for each feature map k, sum over all i, j (global average pooling)
+    - class c score is S^c = w_k^c times this sum
+    - map is sum_{k} w_k^c * f_k(i, j)
+  - approach 3 (mentioned in comments): Grad-CAM
+- GRAD-CAM: https://ramprs.github.io/ramprs.github.io/2017/01/21/Grad-CAM-Making-Off-the-Shelf-Deep-Models-Transparent-through-Visual-Explanations.html
+  - equations in blog
+
+
+Efficient Label Collection for Unlabeled Image Datasets: https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Wigness_Efficient_Label_Collection_2015_CVPR_paper.pdf
+
+- active learning
+- group-based learning
+  - noise problem solutions
+    - collecting binary constraints to iteratively improve clustered output [2, 22],
+    - removing images from a group that do not match the dominating label [7]
+    - only collecting labels from groups that represent exactly one concept
+- hierarchical clustering to establish a space of groupings across a spectrum of visual concept
+- labelling effort = # interactions / # training examples
+- The following types of interactions are used in techniques that address labeling workload:1. Providing a class label for an image [9, 10, 11, 12, 15]2. Providing a class label for a group of images [4, 7, 13,16, 18, 19, 21]3. Indicating that a group lacks a common label [21]4. Removing an image from a group [7]5. Indicating whether or not two images represent the same label [2, 22]
+- Group-based labeling - provides a single label to a group of samples.
+
+One disadvantage of group-based labeling is the addition of label noise when images in the same group represent multiple visual concepts. As discussed before, one reason this can occur is that similarities come in a range of granularities.
+
+data hierarchy H redundant in that labels are inherited
+
+a group is a node in H?
+
+bookmark: section 3.1
+
+Questions
+- what are the 3 approaches mentioned for active learning?
+- what are the 2 approaches mentioned for group labelling?
+- what is hierachical clustering?
+- what is the hierarchy model? http://vision.stanford.edu/documents/Fei-FeiPerona2005.pdf
+
+
+Active Learning
+- one paper
+- me: KNN to assure images close to existing points and determine far away points
+- probabilistic uncertainty sampling [9, 10, 11]
+- Gaussian process models [12]
+- information density [15]
+- Active clustering improves group coherency by iteratively collecting constraints to augment feature representation [2, 8, 22]. Lee and Grauman cluster the “easiest” subset of unlabeled data and label a single group at each iteration to improve overall group coherency [13].
+
+* Jing Watson seminar notes
+deepQA
+learning to rank
+gazeteer / regex - Maluuba
+intents, constraints
+dialogue can use supervised models to predict user queries to generate data
+
+print stdout and stderror and save it to a file at the same time
+command | tee file.txt
+
+
+As reported in this tutorial of Karpathy, these are some guidelines of the different scenarios when using transfer learning in a new dataset:
+- Small and similar images: When the target dataset is small in comparison with the base dataset and its images are very different, the recommendation is to freeze and train the last layer.
+- Large and similar images: When the dataset is large and it has similar images the recommendation is finetune.
+- Small and different images: In this case the recommendation is freeze and train the last layer or some of the last layers
+- Large and different images: In this case the recommendation is finetune.
+
+
+Work Term Evaluation Jing Feedback
+- quiet
+- talk too fast in presentations
+
+Work Term Evaluation My Feedback
+- be more social
+- improve experiment, plotting, and file management
+- go slower for presentations
+- reduce bugs with the code
+
+tensors = []
+tf.group(*tensors)
+
+python quirk: the following work in python 2.7 and 3.6
+lambda: 0
+lambda x, y: x + y
