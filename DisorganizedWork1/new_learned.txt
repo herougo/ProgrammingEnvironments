@@ -1,0 +1,137 @@
+Paper Summary (migrated from ideas.txt)
+- (pseudocode)
+- hyperparameters
+- explanation
+- results
+- architecture
+- referenced data set
+- prerequisite terminology
+- link
+
+- for presentations:
+- explanation
+  - understand 1 results table
+    - know what the numbers mean(ie which accuracy?)
+  - write pseudocode yourself
+  - draw diagrams yourself
+  - extra: give presentation before
+- notes
+  - variables, general, pseudocode, results, hyperparameters, each figure and table
+
+tensorflow
+- static_rnn (fixed sequence length (ie # of timesteps)
+- tf.split(v,4,1) # (3, 4, 5) -> list of (3, 1, 5)
+  tf.unstack(v,4,1) # (3, 4, 5) -> list of (3, 5)
+- with tf.name_scope('s1'):
+    c2 = tf.constant(42)
+  print(c2.name) # s1/Const:0
+- can do feed_dict to variable and it overwrites it
+- y = tf.stop_gradient(y_hard - y) + y # for Gumbel softmax
+- GRU with bidirectional produces rank 2 tensor, whereas LSTM produces rank 3 tensor
+
+
+python tricks
+[features.update(extractor.extract(element)) for extractor in self.extractors]
+
+learn
+- docker
+- backend
+- AWS
+
+Error
+ImportError: libcublas.so.9.0: cannot open shared object file: No such file or directory
+- export LD_LIBRARY_PATH=LD_LIBRARY_PATH:/usr/local/cuda-9.0/lib64/
+
+Recycling
+- garbage: soiled plastic, soiled foil wrap
+- blue: plastic bag, napkin
+- organic: soiled napkin
+- not sure: soiled pizza boxes
+
+ElasticSearch
+- brew install elasticsearch
+- installed mono
+- failed to install fiddler properly
+
+forward kl loss KL[P(X)||Q(X)]
+reverse kl loss KL[Q(X)||P(X)]
+
+** sshfs input/output error
+pgrep -lf sshfs
+kill -9 <pid_of_sshfs_process>
+sudo umount -f <mounted_dir>
+
+
+can smooth KL divergence by adding epsilon to 0-ocurrence words and subtracting epsilon * (# 0-ocurrence words) / (# of remaining words) from others
+
+GAN mode collapse example with bimodal temperature distribution
+- generator fools with cold temperatures
+- discriminator realizes hot temperatures are real and guesses otherwise
+- exploits by using hot temperatures instead
+- dicriminator assumes opposite
+- repeat
+
+auto-regressive -> p(x_i|x_1 ... x_i-1, z) instead of p(x_i|z)
+
+** Conferences
+General AI: AAAI, IJCAI
+Machine learning: ICML, NIPS, ICLR
+NLP domain: ACL, EMNLP, NAACL, COLING(-)
+Data mining/Information retrieval: KDD, SIGIR, CIKM(-)
+Computer vision: CVPR, ICCV, ECCV
+
+(-) means secondary conference
+You can find NLP-related proceedings here: http://aclanthology.info
+The websites are conference-by-conference. for example, this year ACL: https://acl2018.org/
+Program: https://acl2018.org/programme/schedule/
+Sessions include: Machine translation, Information extraction, Summarization, Resource, Annotation, etc.
+
+Keras tokenizer
+- filters get replaced with the split character
+
+pairwise loss: max(s(neg) - s(pos) + sigma, 0)
+
+Lili explanations
+- rejection sampling
+  - want word dist p to look like another word dist q
+    - select (# in q) / (# in p) for each word
+  - variations
+    - add coefficient to avoid (# in q) / (# in p) > 1
+    - take min(1, (# in q) / (# in p)) to resolve this
+
+importance sampling
+Gibbs sampling
+
+
+
+class B:
+    def __init__(self):
+        pass
+    def __del__(self):
+        print('deleted')
+class A:
+    def __init__(self):
+        self.b = B()
+a = A()
+del a # deletes a.b too
+
+b = B()
+b = '' # also deletes a B()
+
+
+
+November 1
+- make sure you understand the task fully (if by word-of-mouth)
+- bring paper and pencil to meeting
+
+
+Code Lessons
+- data scraping python files
+  - run it once => gets all data
+  - check is path to track progress
+
+Hold-out validation: standard train val split
+
+Displaying results
+- summarized
+

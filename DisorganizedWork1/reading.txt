@@ -1,0 +1,58 @@
+General AI: AAAI, IJCAI
+Machine learning: ICML, NIPS, ICLR
+NLP domain: ACL, EMNLP, NAACL, COLING(-)
+Data mining/Information retrieval: KDD, SIGIR, CIKM(-)
+Computer vision: CVPR, ICCV, ECCV
+
+(-) means secondary conference
+
+NLP: http://aclanthology.info/
+ACL: https://acl2018.org/
+Program: https://acl2018.org/programme/schedule/
+
+
+NLP Style Transfer
+Disentangled Representation Learning for Non-Parallel Text Style Transfer
+
+UMNT
+https://openreview.net/forum?id=rkYTTf-AZ
+https://openreview.net/pdf?id=Sy2ogebAW
+
+Lili Mou presentation (selecting words)
+https://arxiv.org/abs/1606.04155
+https://arxiv.org/abs/1704.06877
+https://arxiv.org/abs/1807.02314
+
+Reading List
+** Style Transfer prerequisites **
+Cross-Alignment (Shen et al. 2017) Style Transfer from Non-Parallel Text by Cross-Alignment
+- https://arxiv.org/pdf/1705.09655.pdf
+Style Embedding (Fu et al. 2018) Style transfer in text: Exploration and evaluation
+- https://arxiv.org/pdf/1711.06861.pdf
+
+** UMNT prerequisites **
+Xie et al. (2017) Controllable invariance through adversarial feature learning (5 citations
+Hu et al. (2017) Controllable text generation (ICML 46 citations)
+- https://arxiv.org/pdf/1703.00955
+He et al. (2016) Dual learning for machine translation (NIPS 98 citations)
+- https://papers.nips.cc/paper/6469-dual-learning-for-machine-translation.pdf
+Fader Networks architecture (Lample et al., 2017)  Word translation without parallel data (ICLR 43 citations)
+- https://arxiv.org/pdf/1710.04087.pdf
+
+
+
+** https://github.com/fuzhenxin/Style-Transfer-in-Text **
+
+
+
+
+** ACL **
+Style Transfer Through Back-Translation https://arxiv.org/pdf/1804.09000.pdf
+
+
+Hierarchical Presentation
+https://arxiv.org/pdf/1609.01704.pdf
+https://arxiv.org/pdf/1710.09767.pdf
+https://arxiv.org/pdf/1604.06057.pdf
+
+
