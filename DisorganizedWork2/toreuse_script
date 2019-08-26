@@ -1,0 +1,164 @@
+echo 'I should not be run'
+exit
+
+garbage_adsgsfasd
+
+
+###############################
+# COMMANDS BEHAVIOUR ##########
+###############################
+
+# separated by spaces to separated by lines
+echo 'hei asdf' | awk '{gsub(/ +/, "\n", $0); print}'
+echo 'hei asdf' | tr -s "[:blank:]" "\n"
+# FAIL: echo 'hei asdf' | grep -o '\S*'
+# FAIL: echo 'hei asdf' | sed -E 's/\s+/\n/g'
+
+# read with colour
+# FAIL: echo -e $(cat test.txt)
+
+# apply command to all lines
+echo -e 'hi\nthere' | xargs echo # I think?
+
+# print with colour (MAC)
+printf "\e[0;32m\nGreen Text\n\e[0m"
+printf "\e[0;33m\nYellow Text\n \e[0m"
+printf "\e[0;31m\nRed Text\n \e[0m"
+
+# get nth line
+sed "${n}q;d"
+
+# print line number
+echo 'hi' | awk '{print NR, $0}' # 1 hi, as commas get turned into spaces
+
+# multiline results in bash variable
+echo -e "$hi"
+# FAIL: echo -e $hi
+
+# get string after last '='
+echo 'a=b=c' | sed -e 's#.*=\(\)#\1#' # yields 'c'
+echo 'a=b=c' | awk -F "=" '{print $3}' # yields 3rd "column", which is "c"
+
+# get 1st "command column"
+ps | awk '{print $1}'
+
+# replace text in string
+echo 'hi there' | sed 's/hi/hoo/g' # 'hoo there'
+
+# filter out / remove certain characters
+echo 'hi there' | sed 's/hi//g' # ' there'
+
+# path of the folder the script this text is in
+FOLDER_PATH_OF_THIS_FILE=`dirname "$0"`
+
+###############################
+# COMMANDS ####################
+###############################
+
+# grep .........
+grep -v
+grep -o
+grep 
+
+# ls
+
+
+# wget
+wget .... # download file
+# download all linked images on webpage
+# incrementally add page number
+# download all urls listed as lines in a text file 
+
+
+
+
+
+
+
+###############################
+# SCRIPT ######################
+###############################
+
+# tests that can go in "if [ test ] ; ..."
+string1 = string2		equal (not ==)
+string1 != string2		not equal
+integer1 -eq integer2	equal
+integer1 -ne integer2	not equal
+integer1 -ge integer2 	greater or equal
+integer1 -gt integer2	greater
+integer1 -le integer2	less or equal
+integer1 -lt integer2	less
+-d						file exists and directory
+-e						file exists
+-f						file exists and regular file
+-r						file exists with read permission
+-w						file exists with write permission
+-x						file exists with executable or searchable
+
+# iterate over file paths
+
+
+# stop and ask for y or n
+do read -p "Yes or no?" yesno
+if [ "$yesno" == "y" ]; then
+	echo Yes
+else
+	echo No
+fi
+
+# get arguments
+cmd="$0"
+arg1="$1"
+arg_num="$#"
+arg_all="$@" # $1 onwards
+
+# if file exists
+
+# if-then-else
+if [ "" == "" ] ;then
+	echo Yes
+elif [ "" != "" ]; then
+	echo "maybe"
+else
+	echo No
+fi
+
+# if-then-else one line
+if [ "" == "" ] ;then echo Yes; elif [ "" == "" ]; then echo "maybe"; else echo No; fi
+
+
+# function
+
+
+
+# while
+
+
+
+
+# string equals
+if [ "$hi" == "" ] ;then
+	echo Yes
+if [ "$hi" != "" ] ;then
+	echo Yes
+
+###############################
+# HELPER FUNCTIONS ############
+###############################
+
+printgreen() {
+    printf "\e[0;32m$1\e[0m"
+}
+printyellow() {
+    printf "\e[0;33m$1\e[0m"
+}
+printred() {
+    printf "\e[0;31m\nRed Text\n \e[0m"
+}
+assertisnumber() {
+    RE='^[0-9]+$'
+	if ! [[ $1 =~ $RE ]] ; then
+        echo "error: ${1} is not a number" > &2
+        exit 1
+    fi
+}

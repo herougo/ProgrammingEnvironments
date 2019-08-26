@@ -1,0 +1,45 @@
+#!/bin/bash
+
+echo "ABANDONED: THIS REALLY SUCKS"
+exit
+# ERROR: Mac doesn't recognize the touch command for some reason 
+
+if [ $# -ne 1 ]; then
+   echo "newscript needs one argument"
+fi
+
+yesno() {
+    MESSAGE="$1"
+	read -p "$MESSAGE" _yesno
+	if [ "$_yesno" != "y" ] ; then
+	    echo "Did nothing: ${_yesno}"
+	    exit
+	fi
+}
+
+printyellow() {
+    printf "\e[0;33m$1\e[0m"
+}
+
+LOCATION="~/scripts/public"
+ALIAS_NAME="$1"
+SCRIPT_FILENAME="$ALIAS_NAME-script"
+PATH="$LOCATION/$SCRIPT_FILENAME"
+ALIAS_TEXT="alias ${ALIAS_NAME}='$PATH'"
+
+printyellow "Proposed path: $PATH\n"
+YELLOW_TEXT=`printyellow "$ALIAS_TEXT"`
+yesno "Proceed with creating: $YELLOW_TEXT? (y/n)"
+
+/usr/bin/touch "$PATH"
+echo -e "- Created $PATH"
+/bin/chmod u+x "$PATH"
+echo -e "- Used chmod"
+echo -e "\n$ALIAS_TEXT" >> ~/.bash_profile
+echo -e "- Added to ~/.bash_profile"
+echo -e "done"
+echo -e "Alias tail:"
+/usr/bin/tail -5 ~/.bash_profile
+echo -e "Current Scripts"
+/bin/ls "$LOCATION"
+/usr/bin/open "$LOCATION"

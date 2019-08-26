@@ -1,0 +1,12 @@
+#!/bin/bash
+
+FAILING_TEST_LIST_PATH="/Users/hromel/temp/unittest_failed.txt"
+
+LAST_TEST="`tail -1 $FAILING_TEST_LIST_PATH`"
+
+if [ "${LAST_TEST}" == "" ] ;then
+    echo "Nothing available. Exiting."
+    exit
+ fi
+
+echo "git test $LAST_TEST"

@@ -1,0 +1,8 @@
+printyellow() {
+    printf "\e[0;33m$1\n\e[0m"
+}
+
+GREP_RESULTS="`egrep -r --exclude-dir=.git '(_to_log|print|pdb\.set_trace)' .`"
+
+echo "Can be better"
+printyellow "$GREP_RESULTS"

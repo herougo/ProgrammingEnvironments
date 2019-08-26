@@ -1,0 +1,10 @@
+# Could be better
+
+GIT_OUTPUT="`git config --get remote.origin.url`"
+REPLACED="${GIT_OUTPUT}"
+REPLACED=`echo ${REPLACED} | sed 's/https:\/\///g'`
+REPLACED=`echo ${REPLACED} | sed 's/http:\/\///g'`
+REPLACED=`echo ${REPLACED} | sed 's/:/\//g'`
+REPLACED=`echo ${REPLACED} | sed 's/git@//g'`
+echo "https://${REPLACED}"
+

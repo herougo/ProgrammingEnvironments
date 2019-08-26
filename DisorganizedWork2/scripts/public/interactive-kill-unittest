@@ -1,0 +1,31 @@
+printgreen() {
+    printf "\e[0;32m$1\n\e[0m"
+}
+printyellow() {
+    printf "\e[0;33m$1\n\e[0m"
+}
+printred() {
+    printf "\e[0;31m$1\n\e[0m"
+}
+
+PS_LINES=`ps | egrep -h -r 'python -m unittest' | grep -v grep`
+PS_KILLS=`echo ${PS_LINES} | awk '{print "kill", $1}' | egrep -h -r '[0123456789]+'`
+
+if [ "${PS_KILLS}" == "" ] ;then
+    echo "Nothing available. Exiting."
+    exit
+ fi
+
+echo "Considering the "ps" lines below"
+printyellow "${PS_LINES}"
+echo "About to execute the following kill commands."
+printred "${PS_KILLS}"
+
+read -p "Proceed with kill? (y/n)" _yesno
+if [ "$_yesno" == "y" ] ; then
+    echo "Killed process:"
+    echo `${PS_KILLS}`
+    exit
+else 
+    echo "Did nothing: ${_yesno}"
+fi

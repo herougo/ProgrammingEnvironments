@@ -1,0 +1,793 @@
+
+***********************************
+** Code Design ********************
+***********************************
+
+## Collecting Utility Functions with alternate implementations
+
+from ... import implementations as imp
+
+def is_phone_number(text: str, _implementation: int=imp.DEFAULT):
+  _implementation = blah(53, _implementation)
+  if _implementation == 0: # 
+    return r'\d\d\d\d\d\d\d\d\d\d\d'
+
+# annoying
+# also, copy-pasting to real code requires refactoring
+
+def is_phone_number(text: str, _implementation: int=imp.PYTORCH):
+  if _implementation == 0: # pytext
+    return r'\d\d\d\d\d\d\d\d\d\d\d'
+
+What about calling it? You want to set defaults
+
+default_override = {
+  'is_phone_number': imp.PYTORCH,
+}
+
+# Best Idea so far:
+def is_phone_number():
+  pass
+
+for function name in TextUtilityFunctions:
+  set as global variable and register it
+
+
+http_action(request_params.url, data=request_params.body, headers=request_params.headers, timeout=request_params.timeout)
+
+Should have known
+- when creating a utility script, make a folder with the following
+  - create python file interfaces which should not change
+  - create a python file which should change
+  - create a utils file
+
+***********************************
+** Stuff I Should Look At *********
+***********************************
+
+# Example PR comments
+- basic
+  - magic variables
+  - unecessary computation (ie unzip dict and back)
+  - changing a function and forgetting to update other places that use it
+  - hacky solution (the tests pass, but it does not address the real feature)
+- hard to read
+  - missing comments
+  - overly pythonic
+  - PR usually cap length at 50-200 (otherwise split into separate PRs)
+  - long variable names instead of a comment
+  - when reading a test case, you should be able to understand it wuthout going to helper functions
+    - possibly bad: assertEqual in helper function
+  - pretty print json in snapshot for easier readability
+- code style
+  - not use snapshot for small arrays (easier review and prevents the snapshot files getting clogged)
+- specific
+  - modifying protos is wrong
+
+# THE DEBUGGING GUIDE (Hopefully)
+- finding logs
+  - search session id
+    - find in context
+      - look for e.g. POST response
+      - ctr + f using etc price
+- is it an issue?
+- determine the service first
+- debug locally (10m)
+
+# After coding
+- look over for readability, bugs, unecessary code, etc
+
+# Sprint Lessons
+- large PRs built up without getting merged by the end of the sprint
+- break up migrations (or other complicated logic) into multiple PRs
+  - e.g. 1st PR add code from other repo, 2nd PR request logic, 3rd PR response logic
+  - makes review easier (more lines = more things you're comparing)
+- for complex issues spanning multiple packages and many edge cases, I should've created a sheet with all the different edge cases as rows and the pip packages as columns
+- usually prioritize new production bugs over current work
+- always look into the cause of the issue (don't just look at the code and assume you know to save time)
+- when modifying redis (accidentally deleted in prod)
+  - keep track of original value
+  - make sure it's not used in prod
+  - assume the worst: used in prod, not back up available
+- not testing changes early enough
+  - need to get tickets done
+- should probably be testing big changes locally first before merging
+- side projects all weekend can lead to fatigue Monday morning
+
+** PyCharm
+
+# PyCharm Need to Be Able to Do
+load repo from command line
+- Cmd + V can fail for Mac
+  - Use mouse paste
+keyboard shortcut code snippets
+files side by side
+
+# PyCharm Keyboard Shortcut Changes
+cmd + shift + t	reopen closed tab
+cmd + o: open
+
+Preferences > Editor > General > Code Folding > Collapse by Default: Uncheck Imports
+
+# Mac Settings Preferences
+System Preferences > Mission Control > Uncheck: Automatically rearrange Spaces based on most recent use
+System Preferences > Spotlight > Uncheck all but Documents, Folders, Images, PDF Documents, Spreadsheets, System Preferences
+
+
+### Troubleshooting
+
+# Troubleshooting Mocking URL Fail
+- responses
+  - did you response.activate the containing function?
+  - Are you trying to responses.add in multiple functions at a time?
+- mock
+  - start()
+  - target the source of its use?
+  - Is it called again by something else you don't care about?
+
+# Troubleshooting Pdb fail
+- are you using an alias which passes text to pdb?
+
+# Troubleshooting Tests Fail
+- Did you install dependencies?
+- Did you get the environment variables?
+- Are you  running the necessary DB, cache, etc?
+
+***********************************
+** Improve ************************
+***********************************
+
+# Questions to Ask Supervisor
+- given problem X, how would you debug it?
+  - How would you determine the cause assuming you don't have context?
+  - How can I determine where in the code I should be looking?
+
+# Debugging Tips
+- First determine the service that causes the problem
+- Come up with hypoetheses in debugging
+
+# Git Tips
+- always commit when you fix a tough bug
+- revert single file
+  - git checkout filename
+
+# Git Problems
+- accidental git undo
+  - solution??
+- need to pull origin on branch, but you did gf
+  - 
+- undo soft git reset
+  - ???? git reset ORIG_HEAD
+- moved function in higher up PR and git rebase is tough
+- when you have multiple PRs in a chain, git rebase on later PRs involves doing git push --force
+- Why does git not recognize (it reports conflict) that I am just moving a function in a commit?
+
+# Performance Evaluation (Aug 16, 2019)
+interest in work 7
+ability to learn 5
+- debugging and Postman testing takes a long time
+qualilty of work 6
+- general provider was great
+- she felt more comfortable giving me harder stuff
+- integrating with other people's code could be improved
+- make sure you break into smaller components
+- cancellation policies was very complex (n packages, k PRs per package), but you took ownership
+quantity of work 6/7?
+problem solving 6
+teamwork 6/7?
+- e.g. helping on-board David and Moeyyad to integrate with the general provider adapter
+Dependability 6/7?
+Response to supervision 6
+- originally made 1 PR for ticket
+  - I split up cancellation policies into multiple PRs per package which was much easier to review
+Reflection
+Resourcefulness 6?
+Entrepreneurial orientation 6?
+Written communication (can be improved)
+Oral communication (can be improved)
+- discuss in person instead of slack to come upn with a solution
+- struggling with debugging silently without asking supervisor
+Interpersonal communication (can be improved)
+
+
+***********************************
+** Other **************************
+***********************************
+
+# Ideas
+- Would Google have a way which can automatically prepare reproducible debugging logs for an issue?
+  - For example, given a part of the data, automatically look backwards in the code to find where that value came from. Also, prepare those logs.
+- Is there a better git merge?
+  - It seems to make a lot of dumb mistakes with the diff (e.g. changes on separate lines)
+- Why not have a file just for env variables?
+  - That way you can easily run a for loop at run-time to make sure all are not None.
+  - Also, any code that accesses them, accesses them through that file
+
+# Unsure About What This Means
+- Cannot add new tag unless previous tag has all tests passing?
+
+# Things to do when early:
+- code improve
+  - toreuse_script (and commands)
+  - implement htools desired functions
+  - (learn stuff)
+- learn backend
+  - read early pull requests
+  - move forward from to learn sheet
+  - learn code design/technology application
+    - how do they organize code for ___ (e.g. patch scripts, deployment, data formats, etc)?
+    - how can you use a technology (e.g. redis)?
+    - look at helper functions (e.g. encryption, parse protobuf before passing to function)
+
+# To Learn
+- Stress/load testing
+- Setting up scalable systems (e.g. AWS, Docker, etc)
+- 
+
+Generic Learning goals
+- learn backend
+- improve debugging/coding (or code base learning) speed
+
+Specific goals
+- be able to design an entire service repo from scratch
+- learn automation details (ie automatic snapshot code commits via Gitlab, git test)
+- deploying process
+
+***********************************
+** Learned ************************
+***********************************
+
+# Google Protobuf
+- proto use .value for google.protobuf wrapper
+  - distinguish missing value
+- proto HasField not supported for e.g. integers and strings
+- HasField fails for arrays (use hasattr?)
+- delete field: proto.ClearField('my_field')
+- set empty field: proto.new_field.SetInParent()
+  - before, new_field was missing, but afterwards, new_field was initialized as an empty field
+  - useful for empty messages
+- when to change protobuf
+  - e.g. timeout_seconds (easy to forget casting)
+- adding repeatable objects
+  phone = stuff.phones.add() # phones is repeatable field
+  phone.sadf = sdfsadf
+- map key cannot be enum or message
+  - map value cannot be repeated
+- get field names of message
+  file_name.MyMessage.DESCRIPTOR.fields[0].name
+- check if repeatable field is empty
+  ?????
+- get names of fields in oneof
+  - ?????
+- replace repeatable Message
+    del thing[:]
+    thing.extend([...])
+
+# bad python 3.6 install
+https://stackoverflow.com/questions/51726203/installing-python3-6-alongside-python3-7-on-mac
+brew unlink python
+brew install --ignore-dependencies https://raw.githubusercontent.com/Homebrew/homebrew-core/f2a764ef944b1080be64bd88dca9a1d80130c558/Formula/python.rb
+
+virtualenv -p /usr/local/Cellar/python/3.6.5_1/Frameworks/Python.framework/Versions/3.6/bin/ py3
+> bad interpreter
+
+# good python 3.6 install
+https://www.python.org/downloads/release/python-368/
+
+
+brew install python3
+brew install gcc
+
+
+** git speed
+git fetch then checkout
+git log; git reset --hard XXXX
+
+
+# pdb
+import pdb; pdb.set_trace()
+s -> step (step into function)
+n -> next
+c -> continue
+r -> return (return from function call)
+l -> (show code lines around current breakpoint)
+
+# postgresql?
+Query.query.first().__dict__
+
+# Terminology
+serialization: convert data structure into a form that can be stored/transmitted (e.g. string)
+integration test: test modules working together
+unit test: test individual module
+Consolidation = merging or integration of many items into one
+Regression testing: re-running functional and non-functional tests to ensure that previously developed and tested software still performs after a change (if not it's a regression)
+Legacy: Old method, technology, computer system, or application program, "of, relating to, or being a previous or outdated computer system," yet still in use.
+status: you call them
+postback: they call you with updated status
+
+
+Continuous Integration (CI) - a development practice that requires developers to integrate code into a shared repository several times a day. Each check-in is then verified by an automated build, allowing teams to detect problems early.
+
+Continuous development - describes a process for iterative software development and is an umbrella over several other processes including continuous integration, continuous testing, continuous delivery and continuous deployment.
+
+Microservice
+- problem: monolith service has Large Application Size, Long Release Cycles, Large Teams
+  - challenges: adopting new tech, scalability
+- solution: split into smaller services
+- pros:
+  - New Technology & Process Adaption becomes easier. You can try new technologies with the newer microservices that we create.
+  - Faster Release Cycles
+  - Scaling with Cloud
+- challenges:
+  - debugging
+  - other stuff
+- Great expanation by Ranga Karanam: https://www.quora.com/What-are-microservices
+
+Code coverage - is a measurement of how many (or percentage of) lines/blocks/arcs of your code are executed while the automated tests are running.
+https://stackoverflow.com/questions/195008/what-is-code-coverage-and-how-do-you-measure-it?noredirect=1&lq=1
+Hooking: range of techniques used to alter/augment behaviour of software by intercepting function calls or messages or events passed between software components
+Hook: piece of code which handles these intercepted function calls, events or messages.
+Example: when an engine has an exception, it can have a particular hook which handles that exception.
+A callback is a type of hook maybe? https://stackoverflow.com/questions/467557/what-is-meant-by-the-term-hook-in-programming
+
+
+class A:
+  pass
+a = A()
+b = type(a)()
+
+
+next([], 'default when empty')
+
+# Characters Allowed in GET
+https://stackoverflow.com/questions/1455578/characters-allowed-in-get-parameter
+
+# output installed packages in requirements.txt format
+pip freeze
+
+MagicMock only has return_value and side_effect for returning things (can't be a function). 
+
+# metaclass registering: used in Tensorflow datasets
+
+# hi.hi2.__init__.py
+import abc
+DATASETS = {}
+class RegisteredDataset(abc.ABCMeta):
+  """Subclasses will be registered and given a `name` property."""
+
+  def __new__(mcs, cls_name, bases, class_dict):
+    class_dict["name"] = cls_name
+    cls = super(RegisteredDataset, mcs).__new__(
+        mcs, cls_name, bases, class_dict)
+
+    DATASETS[cls_name] = cls
+    return cls
+
+# hi.__init__.py
+from hi.hi2 import RegisteredDataset
+import six
+@six.add_metaclass(RegisteredDataset)
+class Hai:
+    pass
+
+from hi.hi2 import DATASETS
+from hi import Hai
+h = Hai()
+
+# wrapping
+from functools import wraps
+def stuff(func):
+  @wraps(func)
+  def decorated(*args, **kwargs):
+    pass
+  return decorated
+
+@stuff
+def hi():
+  pass
+
+
+ngrok exposes port publicly so that it can be used via e.g. Postman
+
+# unittest mocking
+patch(f'functions.config.GENERAL_ADAPTER_PROVIDERS[{provider}]', 0).start() fails as it expects attributes from the error message.
+NOTE: you need to mock where it is used (not necessarily where it is defined).
+
+Can do mapping.__getitem__.return_value.side_effect = Exception()
+
+# unittest dynamically add tests
+for i in range(10):
+  def AYO(self):
+    self.assertEqual(-1, i)
+  setattr(TestSequence, f'test_{i}', AYO)
+
+# unittest discovery
+(under Test Discovery header) https://docs.python.org/3/library/unittest.html
+implemented by TestLoader.discover
+files:
+  pattern='test*.py' by default
+classes within the files: 
+
+# unittest
+@mock.patch
+assert_called_once_with
+
+# Assert Exception Raise Unittest
+import unittest
+
+def broken_function():
+    raise Exception('This is broken')
+
+class MyTestCase(unittest.TestCase):
+    def test(self):
+        with self.assertRaises(Exception) as context:
+            broken_function()
+
+        self.assertTrue('This is broken' in context.exception)
+
+if __name__ == '__main__':
+    unittest.main()
+
+# unittest assert raise exception (and check message)
+exn_message = 'my exception'
+my_mock = mock.patch('thing', side_effect=Exception(exn_message)).start()
+with self.assertRaises(Exception) as context:
+  my_logic()
+self.assertEqual(context.exception.args[0], exn_message)
+
+
+Gitlab Runner: open source project that is used to run your jobs and send the results back to GitLab
+
+# define jobs
+job1:
+  script: "bundle exec rspec"
+job2:
+  script:
+    - uname -a
+    - bundle exec rspec
+# docker image to use
+image: ...
+# ??? when
+# "stages:\n - build" below runs all jobs with stage value build in parallel
+# when finished, all test stage jobs are executed in parallel, etc
+stages:
+  - build
+  - test
+  - deploy
+job 1:
+  stage: build
+  script: make build dependencies
+job 2:
+  stage: build
+  script: make build artifacts
+job 3:
+  stage: test
+  script: make test
+job 4:
+  stage: deploy
+  script: make deploy
+  only: 
+    - web
+  except:
+    - production
+# only: names of branches for which the job will run
+# except: names of branches for which the job will NOT run
+
+# run before every job
+before_script:
+  - echo "hello"
+
+# Where's the runner???
+# How to set up image???
+
+# example yml files: https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/gitlab/ci/templates/
+
+lesson: no after 6pm stuff (it's distracting)
+
+# New Git Tags
+(merge your pull request for the branch getting the new tag)
+gitlab > tags > create new tag
+write the version as the old one incremented
+Write a message of PRs that have been added since the last version and current master
+Update Pipfile of other branch(es) to use that tagged version
+
+# Revert Git Tag
+requires delete tag
+redeploy previous built
+
+
+# setup.py
+ext_modules: list of extensions 
+- distutils.core.Extension describes a C or C++ extension module
+- extension can be Cython using cythonize (see below)
+- can be used for cuda
+- e.g. Extension('demo', sources=['demo.c'])
+packages
+- I assume it's the stuff you can import ___ or from __ import ...
+- setuptools.find_packages()
+- setuptools.find_packages(exclude='*.tests', include='*') # exclude/include are shell patterns (converted to regex in setuptools) and include='*' by default
+scripts (doesn't work on Windows) # ???
+cmdclass # ???
+entry_points
+- https://stackoverflow.com/questions/774824/explain-python-entry-points
+- Example
+      entry_points={
+          'console_scripts': [
+              "allennlp=allennlp.run:run"
+          ]
+      }
+  # allennlp (cmd), allennlp.run (python path), run (function)
+  # https://github.com/allenai/allennlp/blob/master/allennlp/run.py
+install_requires  # list of stuff to pip install
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
+install_requires=requirements
+
+Good example: https://github.com/pytorch/vision/blob/master/setup.py
+
+# Cython Example
+# hello.pyx - Python Module, this code will be translated to C by Cython.
+def say_hello():
+    print "Hello World!"
+# launch.py - Python stub loader, loads the module that was made by Cython.
+# This code is always interpreted, like normal Python.
+# It is not compiled to C.
+import hello
+hello.say_hello()
+# setup.py - unnecessary if not redistributing the code, see below
+from setuptools import setup
+from Cython.Build import cythonize
+setup(name = 'Hello world app',
+      ext_modules = cythonize("*.pyx"))
+# Commands
+python setup.py build_ext --inplace
+python launch.py
+
+# Upload your package to PyPi.org so that others can install your package using pip install yourpackage.
+# First step is to claim your package name & space in pypi using:
+$ python setup.py register
+# Once your package name is registered, nobody can claim or use it. After successful registration, you have to upload your package there (to the cloud) by,
+$ python setup.py upload
+# Optionally, you can also sign your package with GPG by,
+$ python setup.py --sign upload
+
+
+# python logging
+Great tutorial: https://docs.python.org/3/howto/logging-cookbook.html
+Multiple calls to logging.getLogger('someLogger') return a reference to the same logger object. 
+This is true not only within the same module, but also across modules as long as it is in the same Python interpreter process. It is true for references to the same object; additionally, application code can define and configure a parent logger in one module and create (but not configure) a child logger in a separate module, and all logger calls to the child will pass up to the parent. 
+logger.exception logs stack trace (info and warning don't)
+
+# this works
+echo $((`echo ''` + 1))
+
+# this works (recursively use " and $( for commands)
+echo "$(echo "$(ls "/Users/")")"
+
+3 ways to send data
+1) maintain a class with desired variable names (copy-pasted across repos) (bad)
+2) maintain a separate repo for #1 classes
+3) protobuf (recommended)
+
+# templates
+from jinja2 import Template
+template = Template('<p>{{email}}</p>')
+remplate.render(email=email)
+
+# Flask Testing
+app = Flask(__name__, template_folder='../templates/').test_client()
+
+# Python Quirks: inheriting multiple classes, which inherit each other
+class Player:
+    pass
+class Enemy(Player):
+    pass
+class GameObject(Player, Enemy):
+    pass
+g = GameObject()
+# raises TypeError: Cannot create a consistent method resolution order (MRO)
+
+# Python Quirks: inheriting multiple classes, which inherit from a common ancestor
+class A:
+    def hi(self):
+        print('a', self)
+class B(A):
+    def hi(self):
+        print('b', self)
+class C(A):
+    def hi(self):
+        print('c', self)
+class D(B, C):
+    pass
+d = D()
+d.hi() # prints 'b <__main__.D object at 0x1077d0c88>'
+
+# PyCharm Tricks
+Move function/class to another file (or just turn method into function)
+- put caret on thing, Move/Refactor (or Fn + F6 on Mac)
+- Question:
+  - what about multiple functions?
+  - does it automatically format?
+  - does it translate between different indent conventions?
+- Cmd + Shift + (plus): Collapse All
+https://www.jetbrains.com/help/idea/refactoring-source-code.html
+
+# Autopep8
+pip install autopep8
+autopep8 --in-place --recursive . # only whitespace changes
+vi ~/.config/pycodestyle
+[pycodestyle]
+max_line_length = 120
+ignore = E501
+exclude = tests/*
+
+# redis-cli -u XXXXXX
+dbsize
+select 14 # select db 14
+KEYS '*'
+GET xxxx
+
+# Attempting pip package to date and back
+pip install -r requirements.txt --before 2018-06-21
+https://stackoverflow.com/questions/51773066/how-to-get-a-list-of-version-numbers-for-python-packages-released-up-until-a-spe
+- also has python script solution
+
+# pipenv
+Pipenv will resolve the sub–dependencies of VCS dependencies, but only if they are editable, like so:
+[packages]
+requests = {git = "https://github.com/requests/requests.git", editable=true}
+If editable is not true, sub–dependencies will not get resolved.
+https://stackoverflow.com/questions/53378416/what-does-pipenv-install-e-do-and-how-to-use-it
+?? still fuzzy
+
+# curlify
+pip install curlify
+import curlify
+print(curlify.to_curl(response.request))
+https://stackoverflow.com/questions/17936555/how-to-construct-the-curl-command-from-python-requests-module
+
+# Python Code Style
+Google separates relative imports. For example,
+from keras import thing1
+from keras import thing2
+Why?
+- merge conflicts?
+- easier automatic addition?
+
+# Python static analysis to add type annotations
+pytype
+.......
+Questions
+- can they handle dependencies?
+
+# Python dynamically add type annotations (in a run-time way)
+https://stackoverflow.com/questions/50416444/automatically-generating-python-type-annotations
+MonkeyType: created at Instagram since they had about 1,000,000 untyped code and they wanted to make it easier to understand for new developers.
+- Uses sys.setprofile to set hooks!!!
+pytype script.py -k -d import-error,name-error -n
+retype
+pyannotate
+Questions
+- can they handle dependencies?
+
+# Python Typing Investigation #############################
+""" hello.py """
+# handle local dependencies
+from amigo import get_amigo_exception
+def get_an_exception():
+	# should have return type AmigoException
+	return get_amigo_exception()
+# handle 3rd party exceptions?
+from PIL import Image
+def get_3rd_party_type():
+	return Image.new('RGB', (3, 2))
+# basic test
+def use_ints(a: int, b: int) -> int:
+	return a + b
+# Does it automatically add dependencies?
+a = get_an_exception()
+b = get_3rd_party_type()
+use_ints(1, 2)
+
+""" amigo.py """
+class AmigoException(Exception):
+	pass
+def get_amigo_exception():
+	return AmigoException()
+
+""" Python Typing Investigation """
+# pip install pytype
+pytype .
+open .pytype
+'''
+Recognizes AmigoException
+Fails at recognizing 3rd party types (ie PIL).
+'''
+
+# pip install monkeytype
+# export MONKEYTYPE_TRACE_MODULES=git_test,numpy,PIL  # specificies libraries in which to trace
+monkeytype run script.py
+# creates monkeytype.sqlite3 with annotations
+monkeytype stub file > annotation.pyi
+cp file.py annotated_file.py
+merge-pyi -i annotated_file.py annotation.pyi
+
+# pip install MonkeyType
+monkeytype run hello.py
+monkeytype stub hello
+'''
+only got annotated get_amigo_exception() -> AmigoException
+pros
+- simple interface
+- prints .pyi files
+- handles 3rd party dependencies!!!
+'''
+
+WARNING: script.py does not seem to receive annotations!
+# https://github.com/dropbox/pyannotate
+# pip install pyannotate
+'''
+# Add the following into hello.py at the right places
+from pyannotate_runtime import collect_types
+collect_types.init_types_collection()
+collect_types.start()
+collect_types.stop()
+collect_types.dump_stats('python_types')
+
+# dump_stats returns output like
+[
+    {
+        "path": "hello.py",
+        "line": 13,
+        "func_name": "get_3rd_party_type",
+        "type_comments": [
+            "() -> PIL.Image.Image"
+        ],
+        "samples": 1
+    }
+]
+# Run the following
+python hello.py # dumps output to python_types file
+pyannotate --type-info yoman -w hello.py # overwrites hello.py with pyannotation
+
+pros
+- handles 3rd party dependencies!
+- automatically adds dependencies
+cons
+- ok interface (need to manually add python code)
+- adds type information like
+  # type: () -> AmigoException
+'''
+
+# Jupyter Tips and Tricks
+https://codeburst.io/jupyter-notebook-tricks-for-data-science-that-enhance-your-efficiency-95f98d3adee4
+Table of contents
+Collapsible headings
+Gists
+Autopep8
+%time
+%timeit
+nbdiff-web base.ipynb local.ipynb
+cython
+(missing Henri explanations)
+
+Jupyter Collpasible headings
+- enable the extension
+- that's it! Enjoy collapsing stuff under headers
+  - though running it uncollapses it (I believe)
+
+Scalable ML to Production
+# https://www.nerdwallet.com/blog/engineering/how-nerdwallet-dialed-machine-learning-up-to-11/
+
+git show --name-only --oneline HEAD
+
+lambda not scalable
+- Harsh says it's supposed to be used for one file functionality
+
+Big refactor -> create tag soon (make sure before other person wants to tag it)
+
+pitch meeting explanation: high-level to low-level
+
+redis get all keys I think
+- [key for key in cache("user:*")]
+

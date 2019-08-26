@@ -1,0 +1,45 @@
+printgreen() {
+    printf "\e[0;32m$1\n\e[0m"
+}
+printyellow() {
+    printf "\e[0;33m$1\n\e[0m"
+}
+printred() {
+    printf "\e[0;31m$1\n\e[0m"
+}
+assertisnumber() {
+    RE='^[0-9]+$'
+	if ! [[ $1 =~ $RE ]] ; then
+        echo "error: ${1} is not a number" >&2
+        exit 1
+    fi
+}
+
+
+assertisnumber $1
+N=$1
+N_PLUS_MORE=$((N+2))
+assertisnumber $N_PLUS_MORE
+
+LATEST_MESSAGES="`git show -s --format=%s -${N_PLUS_MORE}`"
+LATEST_N=`echo "${LATEST_MESSAGES}" | head -${N}`
+EARLIEST_2=`echo "${LATEST_MESSAGES}" | tail -2`
+
+echo "Git commits to squash:"
+printyellow "${LATEST_N}"
+echo "Ignored commits:"
+printred "${EARLIEST_2}"
+
+read -p "Proceed with squash? (y/n)" _yesno
+if [ "$_yesno" != "y" ] ; then
+    echo "Did nothing: ${_yesno}"
+    exit
+fi
+
+LAST_COMMIT="`git show -s --format=%s`"
+git reset --soft HEAD~${N}
+git commit -am "${LAST_COMMIT}"
+
+printyellow "Squashed $N and commited: ${LAST_COMMIT}"
+printyellow "`git show -s --format=%s -3 | tail -2`"
+

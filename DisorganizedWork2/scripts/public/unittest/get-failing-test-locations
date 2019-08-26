@@ -1,0 +1,13 @@
+#!/bin/bash
+
+OUTPUT_PATH="/Users/hromel/temp/unittest_output.txt"
+FAILING_TEST_LIST_PATH="/Users/hromel/temp/unittest_failed.txt"
+
+A=`cat "$OUTPUT_PATH" |  egrep '^(FAIL|ERROR): '`
+# echo -e "$A"
+source ~/virtualenvs/py3/bin/activate
+FAILING_UNITTESTS="`echo -e "$A" | python ~/scripts/public/unittest/get_failing_unittests.py`"
+echo -e "$FAILING_UNITTESTS" > "$FAILING_TEST_LIST_PATH"
+echo -e "$FAILING_UNITTESTS"
+deactivate
+

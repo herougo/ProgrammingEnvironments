@@ -1,0 +1,11 @@
+# ACTUALTODO: only works for gitlab now
+
+FOLDER_PATH_OF_THIS_FILE=`dirname "$0"`
+
+GIT_REPO_URL=`${FOLDER_PATH_OF_THIS_FILE}/git_repo_url`
+
+REPLACED="${GIT_REPO_URL}"
+LEN=${#REPLACED}
+REPLACED="${REPLACED::LEN-4}"  # remove .git
+
+echo "${REPLACED}/merge_requests/new?merge_request%5Bsource_branch%5D=`git rev-parse --abbrev-ref HEAD`&merge_request%5Btarget_branch%5D=master"

@@ -1,0 +1,13 @@
+TODO:
+- filter temp.txt"
+- skim learned.txt
+- simple trim toreuse.py, reusable.py, and toreuse_script, Playground.ipynb
+- filter aliases
+- look in:
+  - unsorted
+  - Downloads
+  - data
+  - models
+  - temp
+  - Documents
+  - helpers

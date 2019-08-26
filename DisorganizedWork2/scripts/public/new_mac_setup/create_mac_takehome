@@ -1,0 +1,24 @@
+echo "untested: try pasting line by line first to ensure it's correct"
+exit
+
+FOLDER_NAME='take_home'
+mkdir "$FOLDER_NAME"
+
+# copy helper files
+cp ~/Documents/helpers/toreuse.py "$FOLDER_NAME"
+cp ~/Documents/helpers/reusable.py "$FOLDER_NAME"
+cp ~/Documents/helpers/toreuse_script "$FOLDER_NAME"
+
+# copy txt files
+cp ~/Documents/txt/temp.txt "$FOLDER_NAME"
+cp ~/Documents/txt/learned.txt "$FOLDER_NAME"
+
+# copy .bash_profile
+cp ~/.bash_profile "$FOLDER_NAME"
+mkdir "$FOLDER_NAME/scripts"
+cp -r ~/scripts/public "$FOLDER_NAME/scripts"
+
+FOLDER_PATH_OF_THIS_FILE=`dirname "$0"`
+
+cat "${FOLDER_PATH_OF_THIS_FILE}/data_take_home_mac_todo.txt"
+
