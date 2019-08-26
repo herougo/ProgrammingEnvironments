@@ -1,0 +1,37 @@
+## Collecting Utility Functions with alternate implementations
+
+from ... import implementations as imp
+
+def is_phone_number(text: str, _implementation: int=imp.DEFAULT):
+  _implementation = blah(53, _implementation)
+  if _implementation == 0: # 
+    return r'\d\d\d\d\d\d\d\d\d\d\d'
+
+# annoying
+# also, copy-pasting to real code requires refactoring
+
+def is_phone_number(text: str, _implementation: int=imp.PYTORCH):
+  if _implementation == 0: # pytext
+    return r'\d\d\d\d\d\d\d\d\d\d\d'
+
+What about calling it? You want to set defaults
+
+default_override = {
+  'is_phone_number': imp.PYTORCH,
+}
+
+# Best Idea so far:
+def is_phone_number():
+  pass
+
+for function name in TextUtilityFunctions:
+  set as global variable and register it
+
+
+http_action(request_params.url, data=request_params.body, headers=request_params.headers, timeout=request_params.timeout)
+
+Should have known
+- when creating a utility script, make a folder with the following
+  - create python file interfaces which should not change
+  - create a python file which should change
+  - create a utils file

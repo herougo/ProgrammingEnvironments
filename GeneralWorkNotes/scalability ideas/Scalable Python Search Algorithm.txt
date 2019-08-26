@@ -1,0 +1,5 @@
+# Scalable Search Algorithm (python)
+
+### Solution 1 (baseline)
+
+implement as usual for single-threaded, pure python

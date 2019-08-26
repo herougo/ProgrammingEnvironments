@@ -1,0 +1,64 @@
+# Scalable Debugging
+
+### Solution 0 - Original
+
+- when test fails, understand the code and manually add print/pdb statements to debug
+
+cons
+
+- requires thorough understanding of the code
+- not always immediately obvious where to put print statements
+
+### Solution 1
+
+- have a script automatically add statements to the beginning of all functions which will log the function name and its variables
+- be able to turn on debugging only for a particular test
+- run the program and a log is generated
+- display the log with a 2-pane ...... interface with left pane for function names and the right for local variables based on the highlighted line on the left pane
+- be able to specify variable names and have the right pane instead to be a corresponding log of its values ...... example
+- final workflow
+  - write your code
+  - run the tests
+  - keep track of the failed tests you want to debug
+   - if there are unobvious failures, run a script which
+     - creates a new branc
+     - inserts the print statements
+     - commits
+   - run the failed tests for debugging
+   - look at the logs to gain insight
+   - checkbox functions you want to verbosely log
+   - repeatedly
+     - make changes
+     - debug how you want
+   - commit your final changes
+   - when ready, run a script which
+     - in your debug branch, move the commit adding the print lines to the end
+       - if there are any conflicts, regenerate the debug lines for that file
+     - update your original branch with the new commits
+   - be able to save and load print configs
+
+
+pros
+
+- while looking at one set of logs, other tests can be running in the background (ie generating the other logs) as opposed to pdb
+
+
+cons
+
+- adding print statements may take time for the computer
+- UI work .........
+- increase in run-time
+- cannot work for remote environments (e.g. staging)
+
+## Rough
+
+- add print statements to the start of each function
+- can turn them on for 1 function
+- create log with 2-pane UI
+  - left: lines of code
+  - right: local variables for line selected on the left
+
+automatically add try-catch wrapper
+- ignore logging after 50 calls
+
+

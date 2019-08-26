@@ -1,0 +1,25 @@
+# Scalable Rapid UI Prototypes
+
+### Solution 1
+
+- define UI structure as python objects, which can be compiled into UI code
+
+Example
+
+body = TabControl({
+  'first tab with two-panel ...': TwoPane(
+     ImageDisplay(image_on_click=send_to_on_click(id='selected_image')),
+     Image('selected image'),
+     widths=['50%', '50%'])),
+  'second tab with settings': Settings({
+    'number of images per page': 20
+  })  # map setting name to defaults
+})
+body.compile()  # reports all errors at once to prevent multiple trials
+body.export()
+
+cons
+
+- how easy would it be to write this
+  - use ILP to help?
+
