@@ -4,7 +4,7 @@ matplotlib
 notebook
 jupyter_contrib_nbextensions
 theano==0.9.0
-tensorflow==1.2.0
+tensorflow==1.12.2
 keras==2.0.2
 tensorboard
 bidict
