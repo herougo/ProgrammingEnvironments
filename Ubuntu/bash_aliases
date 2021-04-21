@@ -247,8 +247,8 @@ alias gdv9='git diff HEAD~9..HEAD > ~/temp/git_diff.txt; subl --new-window ~/tem
 alias gdv10='git diff HEAD~10..HEAD > ~/temp/git_diff.txt; subl --new-window ~/temp/git_diff.txt'
 
 # Git Interactive Push
-alias gpuo2='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately"; exit; fi; read -p "Push ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git push origin ${_branch}; else echo "Did no pushing: ${_yesno}"; fi'
-alias gpuof2='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately"; exit; fi; read -p "Push ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git push origin -f ${_branch}; else echo "Did no pushing: ${_yesno}"; fi'
+alias gpuo2='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately. Not!"; fi; read -p "Push ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git push origin ${_branch}; else echo "Did no pushing: ${_yesno}"; fi'
+alias gpuof2='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately. Not!"; fi; read -p "Push ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git push origin -f ${_branch}; else echo "Did no pushing: ${_yesno}"; fi'
 
 # Git Interactive Pull on Current Branch
 alias gpome='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately"; exit; fi; read -p "Pull ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git pull origin ${_branch}; else echo "Did no pulling: ${_yesno}"; fi'
