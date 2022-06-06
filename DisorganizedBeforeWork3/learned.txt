@@ -3,3 +3,4 @@ asyncio
 
 from a.b import c
 - runs init of a, then b file
+- to set up a registered object, see HearthstoneSimulator

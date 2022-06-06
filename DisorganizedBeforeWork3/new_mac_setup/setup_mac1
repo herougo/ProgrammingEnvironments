@@ -1,0 +1,40 @@
+echo "untested: try pasting line by line first to ensure it's correct"
+exit
+
+BASE_SOURCE='.'
+SCRIPTS_SOURCE="${BASE_SOURCE}/scripts"
+BASH_PROFILE_SOURCE="${BASE_SOURCE}/.bash_profile"
+
+# mkdir ~/
+mkdir ~/temp
+#mkdir ~/scripts # handled elsewhere
+mkdir ~/virtualenvs
+
+# mkdir ~/Documents/
+mkdir ~/Documents/Jupyter
+mkdir ~/Documents/github
+mkdir ~/Documents/txt
+mkdir ~/Documents/unsorted
+mkdir ~/Documents/helpers
+
+# touch txt
+touch ~/Documents/txt/temp.txt
+touch ~/Documents/txt/learned.txt
+
+# copy scripts
+cp -r ${SCRIPTS_SOURCE} ~/scripts
+
+# copy helper files
+cp "${BASE_SOURCE}/toreuse.py" ~/Documents/helpers
+cp "${BASE_SOURCE}/reusable.py" ~/Documents/helpers
+cp "${BASE_SOURCE}/toreuse_script" ~/Documents/helpers
+
+
+setup_mac2
+# (look at aliases???)
+
+# add to .bash_profile
+cat "$BASH_PROFILE_SOURCE" >> ~/.bash_profile
+
+#verify
+vi ~/.bash_profile

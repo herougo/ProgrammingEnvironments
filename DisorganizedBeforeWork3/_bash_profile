@@ -1,0 +1,301 @@
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export PATH="/usr/local/opt/icu4c/bin:$PATH"
+
+export PATH=/usr/local/bin:$PATH
+export CUDA_ROOT=/usr/local/cuda
+
+
+alias s.='open .'
+
+
+
+# IMS
+alias c.='cd ..; ls'
+alias c..='cd ../..; ls'
+alias aly='open -a TextEdit ~/.bash_profile'
+alias te='open -a TextEdit'
+alias gi='git init'
+#alias subl='open "/Users/hromel/Library/Application Support/Sublime Text 3/Packages"'
+alias jup='cd ~/Documents/Jupyter/; source ~/virtualenvs/py3/bin/activate; jupyter notebook'
+alias de='deactivate'
+alias ga='git add -A'
+# alias gl='git ls-tree --full-tree -r HEAD' # list all files part of the repo
+alias nbpy='jupyter nbconvert --to script' # convert .ipynb file to .py file
+alias sl='echo "Oops..."; ls'
+alias st='git status'
+alias jupy='cd ~/Documents/Jupyter/'
+
+# **********************************
+# Git Stuff
+# **********************************
+
+# alias ca='cd ~; vi .bash_profile'
+alias co='git checkout'
+alias cob='git checkout -b'
+alias gc='git commit -am'
+alias gp='git pull'
+alias gpo='git pull origin'
+alias gpuo='git push origin'
+alias gu='git reset --hard HEAD~1'
+alias idgaf='git checkout -b idgaf; git add *; git commit -am idgaf; git checkout master; git branch -D idgaf'
+# alias pu='git push origin $(git symbolic-ref HEAD | sed "s!refs\/heads\/!!")'
+alias u='git commit -am update'
+
+
+
+#alias data='cd ~/Documents/Jupyter/kendata/'
+#alias gity='cd ~/Documents/github; ls'
+#alias backupy='scp . hromel@ip:~'
+#alias sshy='ssh userid@ip'
+alias rmy='rm -fr'
+# -f means never print, -r for recursion
+#alias servy='echo userid@id:/home/hromel/'
+
+alias gity='cd ~/Documents/GitHub; ls'
+alias docy='cd ~/Documents; ls'
+alias vepy3='source ~/virtualenvs/py3/bin/activate'
+alias pipr='pip install -r requirements.txt'
+alias sshy='ssh henri@192.168.0.109'
+alias servy='echo henri@192.168.0.109'
+#alias ve='source ~/virtualenvs/venv/bin/activate'
+alias ve='source ~/virtualenvs/py3/bin/activate'
+
+alias pipi='pip install'
+alias pipu='pip uninstall'
+alias gb='git branch --sort=-committerdate'
+alias gd='git diff'
+
+alias mnty="echo 'sudo sshfs -o allow_other,defer_permissions,IdentityFile=~/.ssh/id_rsa henri@192.168.0.109:/home/henri/github/deepengine /mnt/pycharmmnt
+sudo umount /mnt/pycharmmnt'"
+
+alias gpor='git pull --rebase origin master'
+# git reset --hard origin/cloze-example
+alias gl='git log'
+alias gf='git add -u .; git commit --amend --no-edit'
+# git add -u . ignores untracked files
+
+alias gpuo1='git push origin `git rev-parse --abbrev-ref HEAD`'
+# '+' sign forces the push
+alias gpuo2='git push origin +`git rev-parse --abbrev-ref HEAD`'
+alias gpuo3='~/scripts/public/git/sanity_check_before_push; git push origin +`git rev-parse --abbrev-ref HEAD`'
+
+alias gety="rsync -auv henri@192.168.0.109:ml_results ~/Documents  | grep -v 'uptodate'"
+
+alias pytime='python -m cProfile -s cumulative'
+alias pymem="printf 'Note:\n- be sure you used the @profile decorator\n- it doesnt work with __iter__ within a class\n'; python -m memory_profiler"
+alias com='git checkout master'
+alias sendy='echo "scp . henri@192.168.0.109:/home/henri/ml_results/"'
+alias mnty2="echo 'sudo sshfs -o allow_other,defer_permissions,IdentityFile=~/.ssh/id_rsa henri@192.168.0.109:/home/henri/github/shopreader /mnt/shopreadermnt
+sudo umount /mnt/shopreadermnt'"
+
+alias gD='git branch -D'
+alias grm='git rm --cached'
+alias gst='git stash' # equivalent to git stash save
+alias gsts='git stash show' # show what has been stashed
+alias gsta='git stash apply' # load the stashed work
+alias renamey='ls -tr | cat -n | while read n f; do mv "$f" "yo/$n-$f"; done'
+
+# doesn't work
+alias tb='tensorboard --logdir /Users/hromel/tf_logs/ --port 6006'
+
+alias gpom='git pull origin master'
+
+#alias lsl='ls -l --block-size=M'
+
+
+alias gsn='git show --name-only'
+alias gdn='git diff --name-only'
+
+# Setting PATH for Python 3.6
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
+export PATH
+
+# May 2019 Onwards
+
+# Company-Specific Stubs
+alias psqly=''
+alias te='git test; ./git-test'
+alias run-repo='echo "(Run this command)"'
+alias t-repo='(Test this repo)'
+alias sshy=''
+alias servy=''
+alias mnty=''
+
+# Git Stash
+# stash work away
+alias gst='git stash' # equivalent to git stash save
+# show saved work
+alias gsts='git stash show' # show what has been stashed
+# get work back
+alias gsta='git stash apply' # load the stashed work
+# clear stashed work for the repo
+alias gstc='git stash clear' # clear stached work
+# show all stashes in all branches
+alias gstl='git stash list'
+
+# Old Git squash
+alias gca='git commit --amend -m'
+#alias gsq2='git reset --soft HEAD~2 && git commit -am "REPLACE ME"; echo "Now use gca (git commit --amend -m) to change the commit message"'
+alias gsq3='git reset --soft HEAD~3 && git commit -am "REPLACE ME"; echo "Now use gca (git commit --amend -m) to change the commit message"'
+alias gsq4='git reset --soft HEAD~4 && git commit -am "REPLACE ME"; echo "Now use gca (git commit --amend -m) to change the commit message"'
+alias gsq5='git reset --soft HEAD~5 && git commit -am "REPLACE ME"; echo "Now use gca (git commit --amend -m) to change the commit message"'
+alias gsq6='git reset --soft HEAD~6 && git commit -am "REPLACE ME"; echo "Now use gca (git commit --amend -m) to change the commit message"'
+alias gsq7='git reset --soft HEAD~7 && git commit -am "REPLACE ME"; echo "Now use gca (git commit --amend -m) to change the commit message"'
+alias gsq2-2='~/scripts/public/interactive-git-squash 2'
+alias gsq2-3='~/scripts/public/interactive-git-squash 3'
+alias gsq2-4='~/scripts/public/interactive-git-squash 4'
+alias gsq2-5='~/scripts/public/interactive-git-squash 5'
+alias gsq2-6='~/scripts/public/interactive-git-squash 6'
+alias gsq2-7='~/scripts/public/interactive-git-squash 7'
+
+# Git diff
+alias gd1='git diff HEAD~1..HEAD'
+alias gd2='git diff HEAD~2..HEAD'
+alias gd3='git diff HEAD~3..HEAD'
+alias gd4='git diff HEAD~4..HEAD'
+alias gd5='git diff HEAD~4..HEAD'
+alias gd6='git diff HEAD~4..HEAD'
+alias gd7='git diff HEAD~4..HEAD'
+alias gd8='git diff HEAD~4..HEAD'
+alias gd9='git diff HEAD~4..HEAD'
+alias gd10='git diff HEAD~4..HEAD'
+
+# Other Git
+alias idgaf='git reset --hard'
+alias gcm='git commit -m'
+# git what
+alias gw='echo "git branch ###############"; git branch; echo "git diff ###############"; git diff'
+
+# Public Good to Know
+alias where-python="echo '/usr/local/bin'; ls -1 /usr/local/bin | egrep 'python[\.0123456789]*$'; echo '/Library/Frameworks/Python.framework/Versions/'; ls -1 /Library/Frameworks/Python.framework/Versions/"
+alias where-python-packages='echo "Could be better"; echo /Users/hromel/.local/share/virtualenvs/*/lib/python3.6/site-packages/ /Users/hromel/virtualenvs/py3//lib/python3.6/site-packages/ | tr -s "[:blank:]" "\n"'
+alias git-current-branch='git rev-parse --abbrev-ref HEAD' # current branch
+alias git-repo-name='basename `git rev-parse --show-toplevel`'
+alias yesno='while :; do read -p "Yes or no?" _yesno; if [ "$_yesno" == "y" ] ;then echo Yes; else echo No; fi; done'
+alias git-local-branches="git branch | awk -F ' +' '! /\(no branch\)/ {print $2}'"
+alias where-sublime-packages='echo "/Users/hromel/Library/Application Support/Sublime Text 3/Packages"'
+alias create-venv='virtualenv -p python3.6 venv'
+alias ve-here='source venv/bin/activate'
+alias git-skip-ci='git push -o ci.skip origin'
+alias git-last-commit-message='git show -s --format=%s'
+# git config --local alias.test '!echo hi' # exclaimation point to allow non git commands used for the alias
+# pip uninstall everything
+# https://stackoverflow.com/questions/11248073/what-is-the-easiest-way-to-remove-all-packages-installed-by-pip
+alias pip-uninstall-all='pip freeze | grep -v "^-e" | xargs pip uninstall -y'
+alias git-alias-ls='git config --get-regexp alias'
+
+# Public Good to Know Short-forms
+alias wpp='echo "Could be better"; echo /Users/hromel/.local/share/virtualenvs/*/lib/python3.6/site-packages/ /Users/hromel/virtualenvs/py3//lib/python3.6/site-packages/ | tr -s "[:blank:]" "\n"'
+
+# Other Public
+alias ve2='source env/bin/activate'
+alias ves='pipenv shell'
+alias ngroky='~/Downloads/ngrok http 5000'
+alias c='echo "Do nothing because of pdb"'
+alias findy='find . -name'
+
+# Git commit messages
+# Is this really necessary?
+alias gc-cc='git commit -am "code cleaning"'
+alias gc-wip='git commit -am "work in progress"'
+alias gc-ft='git commit -am "fixed tests"'
+# alias gc-gl='git commit -am "git lint fixes"'
+alias gc-mm='git commit -am "merged master"'
+alias gc-sc='git commit -am "small change"'
+alias gc-pr='git commit -am "addressing PR comments"'
+#alias gc-pr1='git commit -am "addressing PR round 1 comments"'
+#alias gc-pr2='git commit -am "addressing PR round 2 comments"'
+#alias gc-pr3='git commit -am "addressing PR round 3 comments"'
+alias gc-mc='git commit -am "resolving merge conflicts"'
+alias gc-tag='git commit -am "updated tag"'
+alias gc-lint='git commit -am "git lint fixes"'
+alias gc-snap='git commit -am "updated snapshots"'
+
+# Git PR
+alias gc-pr='git commit -am "`git rev-parse --abbrev-ref HEAD`: addressing PR comments"'
+alias gc-pr1='git commit -am "`git rev-parse --abbrev-ref HEAD`: addressing PR round 1 comments"'
+alias gc-pr2='git commit -am "`git rev-parse --abbrev-ref HEAD`: addressing PR round 2 comments"'
+alias gc-pr3='git commit -am "`git rev-parse --abbrev-ref HEAD`: addressing PR round 3 comments"'
+alias gc-pr4='git commit -am "`git rev-parse --abbrev-ref HEAD`: addressing PR round 4 comments"'
+
+
+# GITLAB-SPECIFIC
+# load webpage for a pull request for the current branch into master
+# alias gpr='open "$(~/scripts/public/git/git_repo_url)/merge_requests/new?merge_request%5Bsource_branch%5D=`git rev-parse --abbrev-ref HEAD`&merge_request%5Btarget_branch%5D=master"'
+#alias gpr2='open "https://gitlab.com/textemma/packages/$(basename `git rev-parse --show-toplevel`)/merge_requests/new?merge_request%5Bsource_branch%5D=`git rev-parse --abbrev-ref HEAD`&merge_request%5Btarget_branch%5D=master"'
+# https://gitlab.com/`git config --get remote.origin.url | sed -e 's#.*:\(\)#\1#'`"
+alias gpr='open "`~/scripts/public/git/git_repo_pr_url`"'
+
+# git diff visualize (Using Gitlab)
+alias ggdv='open "https://gitlab.com/replaceme/$(basename `git rev-parse --show-toplevel`)/compare/master...`git rev-parse --abbrev-ref HEAD`"'
+# NOTE: I believe the merging and squashed repo commit have separate commit hashes (ie you see more commits than 4 in gdv4)
+# TODO: fix up these urls
+alias ggdv1='open "https://gitlab.com/replaceme/$(basename `git rev-parse --show-toplevel`)/compare/`git rev-parse HEAD~1`...`git rev-parse HEAD`"'
+alias ggdv2='open "https://gitlab.com/replaceme/$(basename `git rev-parse --show-toplevel`)/compare/`git rev-parse HEAD~2`...`git rev-parse HEAD`"'
+alias ggdv3='open "https://gitlab.com/replaceme/$(basename `git rev-parse --show-toplevel`)/compare/`git rev-parse HEAD~3`...`git rev-parse HEAD`"'
+alias ggdv4='open "https://gitlab.com/replaceme/$(basename `git rev-parse --show-toplevel`)/compare/`git rev-parse HEAD~4`...`git rev-parse HEAD`"'
+alias ggdv5='open "https://gitlab.com/replaceme/$(basename `git rev-parse --show-toplevel`)/compare/`git rev-parse HEAD~5`...`git rev-parse HEAD`"'
+alias ggdv6='open "https://gitlab.com/replaceme/$(basename `git rev-parse --show-toplevel`)/compare/`git rev-parse HEAD~6`...`git rev-parse HEAD`"'
+
+# Sublime-Based
+alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+alias gdv='git diff > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+alias gdv1='git diff HEAD~1..HEAD > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+alias gdv2='git diff HEAD~2..HEAD > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+alias gdv3='git diff HEAD~3..HEAD > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+alias gdv4='git diff HEAD~4..HEAD > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+alias gdv5='git diff HEAD~5..HEAD > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+alias gdv6='git diff HEAD~6..HEAD > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+alias gdv7='git diff HEAD~7..HEAD > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+alias gdv8='git diff HEAD~8..HEAD > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+alias gdv9='git diff HEAD~9..HEAD > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+alias gdv10='git diff HEAD~10..HEAD > ~/temp/git_diff.txt; /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl --new-window ~/temp/git_diff.txt'
+
+# Git Interactive Push
+alias gpuo2='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately"; exit; fi; read -p "Push ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git push origin ${_branch}; else echo "Did no pushing: ${_yesno}"; fi'
+alias gpuof2='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately"; exit; fi; read -p "Push ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git push origin -f ${_branch}; else echo "Did no pushing: ${_yesno}"; fi'
+
+# Git Interactive Pull on Current Branch
+alias gpome='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately"; exit; fi; read -p "Pull ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git pull origin ${_branch}; else echo "Did no pulling: ${_yesno}"; fi'
+
+# Git Update
+# "update $count" message, where the count is branch specific
+alias u-reset='git config "branch.`git rev-parse --abbrev-ref HEAD`.count" 0'
+alias u='git config "branch.`git rev-parse --abbrev-ref HEAD`.count" $(($(git config "branch.`git rev-parse --abbrev-ref HEAD`.count") + 1)); git commit -am "update $(git config "branch.$(git rev-parse --abbrev-ref HEAD).count")"'
+
+# Old
+alias pyps="ps | egrep -r '(git-test|python)'"
+alias pyps2="ps | egrep -r 'python -m unit'"
+alias psycopgy='echo env LDFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib" pip3 install psycopg2'
+
+
+# Aliases for Local Scripts
+# interactive checkout based on index instead of name
+alias co2='~/scripts/public/ico'
+alias kut='~/scripts/public/interactive-kill-unittest'
+
+# Unittest Script (Experimental)
+# run tests
+alias te='rm ~/temp/unittest_output.txt; git test 2>&1 | tee -a ~/temp/unittest_output.txt; ~/scripts/public/unittest/get-failing-test-locations'
+alias tefv='subl ~/temp/unittest_failed.txt'  # visualize what the names of the failed tests
+alias tef='cat ~/temp/unittest_failed.txt | xargs git test'  # run only the failed tests
+alias tev='subl ~/temp/unittest_output.txt'  # visualize the test output
+alias terl='`~/scripts/public/unittest/get-last-failing-test`'  # run the last failing test
+
+# Unsorted
+alias gmprs='open "https://gitlab.com/replaceme/packages/$(basename `git rev-parse --show-toplevel`)/merge_requests?scope=all&utf8=✓&state=merged"'
+alias gprs='open "https://gitlab.com/replaceme/packages/$(basename `git rev-parse --show-toplevel`)/merge_requests?scope=all&utf8=✓&state=opened"'
+
+# New
+alias co-back='git checkout @{-1}'
+alias pepi-example=''
+alias pepu='pipenv run pip uninstall --yes'
+alias pepi='pipenv run pipenv run pip install'
+alias time-milliseconds='python -c "import time; print(int(time.time()*1000))"'
+# alias greeny='printf "\e[0;32m'  # make text from now on green (not right green)
+
+
+
+
+

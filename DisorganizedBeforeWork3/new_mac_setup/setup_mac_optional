@@ -1,0 +1,28 @@
+echo "untested: try pasting line by line first to ensure it's correct"
+exit
+
+# optional
+BASE_SOURCE='.'
+
+PIP_REQUIREMENTS_PATH="${BASE_SOURCE}/requirements.txt"
+
+mkdir ~/backup
+mkdir ~/data
+mkdir ~/models
+mkdir ~/tf_logs
+
+(company-specific repo)
+
+mkdir ~/Documents/tasks
+
+touch ~/Documents/txt/questions.txt
+
+virtualenv -p python3 ~/virtualenvs/py3
+
+# This actually works
+source ~/virtualenvs/py3/bin/activate
+python -V  # version
+pip3 install -r "$PIP_REQUIREMENTS_PATH"
+deactivate
+
+
