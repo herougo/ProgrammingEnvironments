@@ -1,0 +1,5 @@
+asyncio
+- cannot await inside a non-async function
+
+from a.b import c
+- runs init of a, then b file
