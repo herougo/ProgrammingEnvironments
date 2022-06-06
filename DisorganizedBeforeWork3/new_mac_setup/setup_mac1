@@ -38,3 +38,9 @@ cat "$BASH_PROFILE_SOURCE" >> ~/.bash_profile
 
 #verify
 vi ~/.bash_profile
+
+# New (June 6, 2022)
+mkdir ~/scripts/new-public
+mkdir ~/scripts/company-specific
+mkdir ~/company-specific-tests
+# make folders named by descriptive titles and JIRA tasks

@@ -1,0 +1,41 @@
+First day
+- what skills should I develop
+- meeting schedule
+- job evaluation schedule
+- number of interns
+- what services will I be working on?
+- to whom do I assign PR's
+- who can I ask questions?
+
+Later
+- per repo
+  - debugging locally
+  - environment variables
+- Postman still used? Idea for improvement?
+- How to test via Postman
+- code bases to learn from
+- multiple people
+  - what distinguishes a great software engineer?
+
+Eventually
+- deploying
+- building scalable systems
+- AWS
+- be able to code the service repo from scratch
+- learn automation details (e.g. git test)
+- stress/load testing
+
+Specific to work 3
+- Why is Quart so cost efficient?
+- Is ensure_future needed? Can't you just do this: task = async_fn()?
+- answered on my own
+  - unittest: mock logger, mock connection
+  - protos
+  - designing tests
+  - doc strings
+  - virtual environment used
+
+# Minor
+
+- property in abstract class: return self._colour
+  - with expectation of subclasses include colour at top for readability
