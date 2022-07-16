@@ -1,5 +1,23 @@
 #!/bin/bash
 
+# Summary: Checkout files from branch $2 that were modified in the last $1 commits
+# of that branch.
+# 
+# argument $1: integer greater than 1
+# argument $2: branch name to checkout files from
+# 
+# Why does this script exist?
+#   - Suppose you have a branch A with changes, but later you decide you want it to branch
+#     from another branch B. A solution is you create a new branch C which branches from B,
+#     Run this script while on branch C and specify branch A as an argument. You can then commit
+#     the changes on branch C.
+#   - Suppose you find out later that your branch has the wrong name. You can create a new branch
+#     with the correct name and use this script to migrate the changes over to the new branch.
+#       - Note: a new script will probably have to be made to handle this case better.
+# 
+# Problems:
+#   - What if the relevant commits are not completely contiguous?
+
 printgreen() {
     printf "\e[0;32m$1\n\e[0m"
 }
