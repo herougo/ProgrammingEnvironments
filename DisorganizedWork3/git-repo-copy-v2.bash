@@ -3,7 +3,7 @@
 # Summary: Checkout files from branch $2 that were modified in the last $1 commits
 # of that branch.
 # 
-# argument $1: integer greater than 1
+# argument $1: positive integer
 # argument $2: branch name to checkout files from
 # 
 # Why does this script exist?
