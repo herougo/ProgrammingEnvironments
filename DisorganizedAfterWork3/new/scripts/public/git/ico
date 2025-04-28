@@ -1,0 +1,11 @@
+#!/bin/bash
+
+_local_branches=`git branch | awk -F ' +' '! /\(no branch\)/ {print $2}'`
+echo -e "${_local_branches}" | awk '{print "[", NR, "]", $0}'
+read -p "Which branch number?" _branch_num
+_branch=`echo -e "${_local_branches}" | sed "${_branch_num}q;d"`
+if [ "${_branch}" == "" ]; then
+  echo "Invalid branch: ${_branch}"
+else
+  git checkout ${_branch}
+fi

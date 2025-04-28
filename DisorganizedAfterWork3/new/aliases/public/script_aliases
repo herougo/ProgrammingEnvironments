@@ -1,0 +1,8 @@
+alias gsq2='~/new/scripts/public/git/interactive-git-squash 2'
+alias gsq3='~/new/scripts/public/git/interactive-git-squash 3'
+alias gsq4='~/new/scripts/public/git/interactive-git-squash 4'
+alias gsq5='~/new/scripts/public/git/interactive-git-squash 5'
+alias gsq6='~/new/scripts/public/git/interactive-git-squash 6'
+alias gsq7='~/new/scripts/public/git/interactive-git-squash 7'
+
+alias co2='~/new/scripts/public/git/ico'

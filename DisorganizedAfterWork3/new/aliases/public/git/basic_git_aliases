@@ -1,0 +1,61 @@
+alias gi='git init'
+alias gA='git add -A'
+alias co='git checkout'
+alias cob='git checkout -b'
+alias gc='git commit -am'
+alias gp='git pull'
+alias gpo='git pull origin'
+alias gpuo='git push origin'
+alias gu='git reset --hard HEAD~1'
+alias gb='git branch --sort=-committerdate'
+alias gd='git diff'
+alias gprom='git pull --rebase origin master'
+alias gl='git log'
+alias gf='git add -u .; git commit --amend --no-edit'
+alias com='git checkout master'
+
+alias gD='git branch -D'
+alias grm='git rm --cached'
+
+alias gpom='git pull origin master'
+alias gsn='git show --name-only'
+alias gdn='git diff --name-only'
+
+# Git Stash
+# stash work away
+alias gst='git stash' # equivalent to git stash save
+# show saved work
+alias gsts='git stash show' # show what has been stashed
+# get work back
+alias gsta='git stash apply' # load the stashed work
+# clear stashed work for the repo
+alias gstc='git stash clear' # clear stached work
+# show all stashes in all branches
+alias gstl='git stash list'
+
+alias gca='git commit --amend -m'
+
+# Git diff
+alias gd1='git diff HEAD~1..HEAD'
+alias gd2='git diff HEAD~2..HEAD'
+alias gd3='git diff HEAD~3..HEAD'
+alias gd4='git diff HEAD~4..HEAD'
+alias gd5='git diff HEAD~5..HEAD'
+alias gd6='git diff HEAD~6..HEAD'
+alias gd7='git diff HEAD~7..HEAD'
+alias gd8='git diff HEAD~8..HEAD'
+alias gd9='git diff HEAD~9..HEAD'
+alias gd10='git diff HEAD~10..HEAD'
+
+alias idgaf='git reset --hard'
+
+# git what
+alias gw='echo "git branch ###############"; git branch; echo "git diff ###############"; git diff'
+
+
+# Git Interactive Push
+alias gpuo2='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately"; exit; fi; read -p "Push ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git push origin ${_branch}; else echo "Did no pushing: ${_yesno}"; fi'
+alias gpuof2='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately"; exit; fi; read -p "Push ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git push origin -f ${_branch}; else echo "Did no pushing: ${_yesno}"; fi'
+
+# Git Interactive Pull on Current Branch
+alias gpome='_branch=`git rev-parse --abbrev-ref HEAD`; if [ "${_branch}" == "master" ]; then echo "Current branch is master. Exiting immediately"; exit; fi; read -p "Pull ${_branch}?" _yesno; if [ "$_yesno" == "" ] ;then git pull origin ${_branch}; else echo "Did no pulling: ${_yesno}"; fi'

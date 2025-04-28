@@ -1,0 +1,4 @@
+alias c.='cd ..; ls'
+alias c..='cd ../..; ls'
+alias sl='echo "Oops..."; ls'
+alias rmy='echo "rm -fr"'

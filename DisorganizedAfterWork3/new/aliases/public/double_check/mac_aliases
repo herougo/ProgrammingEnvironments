@@ -1,0 +1,2 @@
+alias aly='open -a TextEdit ~/.bash_profile'
+alias te='open -a TextEdit'

@@ -1,0 +1,11 @@
+# NEEDS TESTING
+
+# source ~/new/aliases/public/script_aliases
+# source ~/new/aliases/public/python_aliases
+# source ~/new/aliases/public/basic_aliases
+# source ~/new/aliases/public/git/basic_git_aliases
+# source ~/new/aliases/public/git/conventional_commit_git_aliases
+
+# Double check
+# source ~/new/aliases/public/double_check/file_path_specific_aliases
+# source ~/new/aliases/public/double_check/mac_aliases

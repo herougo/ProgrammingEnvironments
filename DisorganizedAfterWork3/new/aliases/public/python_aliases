@@ -1,0 +1,7 @@
+alias de='deactivate'
+alias pipr='pip install -r requirements.txt'
+alias pipi='pip install'
+alias pipu='pip uninstall'
+
+alias where-python="echo '/usr/local/bin'; ls -1 /usr/local/bin | egrep 'python[\.0123456789]*$'; echo '/Library/Frameworks/Python.framework/Versions/'; ls -1 /Library/Frameworks/Python.framework/Versions/"
+alias where-python-packages='echo "Could be better"; echo /Users/hromel/.local/share/virtualenvs/*/lib/python3.6/site-packages/ /Users/hromel/virtualenvs/py3//lib/python3.6/site-packages/ | tr -s "[:blank:]" "\n"'
