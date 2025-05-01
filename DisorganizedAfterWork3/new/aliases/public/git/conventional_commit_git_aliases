@@ -1,20 +1,21 @@
-alias gc-sc='git commit -am "misc: small change"'
-alias gc-snap='git commit -am "fix: updated test snapshots"'
+# MAIN FEAT
 alias gc-wip='git commit -am "feat: work in progress"'
-alias gc-fb='echo "fix: bug(s) fixed"'
-alias gc-tag='git commit -am "build: updated tag"'
-alias gc-mm='git commit -am "misc: merged master"'
-alias gc-lint='git commit -am "style: lint changes"'
-alias gc-mc='git commit -am "misc: resolved merge conflicts"'
-alias gc-dep='echo "build: Ran poetry update"'
-alias gc-ft='git commit -am "fix: getting tests to pass (complete)"'
-alias gc-clean='git commit -am "misc: various code cleaning"'
-# gc-clean: removing log statements, tidying up code
-alias gc-test='git commit -am "test: added test case(s)"'
-alias gc-ft-wip='git commit -am "fix: getting tests to pass (work in progress)"'
-alias gc-migrate='echo "migrate: moved ____"'
-alias gc-docs='git commit -am "docs: improved documentation"'
 
+# MAIN FIX
+# We distinguish commits that fix the logic of the code, or the tests themselves, or both.
+alias gc-ft-wip='git commit -am "fix(tests): getting tests to pass (work in progress)"'
+alias gc-fl-wip='git commit -am "fix(logic): getting tests to pass (work in progress)"'
+alias gc-flt-wip='git commit -am "fix(logic,tests): getting tests to pass (work in progress)"'
+alias gc-ft-new='git commit -am "fix(tests): >= 1 previously failing test now PASSES"'
+alias gc-fl-new='git commit -am "fix(logic): >= 1 previously failing test now PASSES"'
+alias gc-flt-new='git commit -am "fix(logic,tests): >= 1 previously failing test now PASSES"'
+alias gc-ft='git commit -am "fix(tests): getting tests to pass (complete)"'
+alias gc-fl='git commit -am "fix(logic): getting tests to pass (complete)"'
+alias gc-flt='git commit -am "fix(logic,tests): getting tests to pass (complete)"'
+alias gc-fb='echo "fix: bug(s) fixed"'
+alias gc-snap='git commit -am "fix(tests): updated test snapshots"'
+
+# NUMBERED FEAT/FIX
 alias gc-pr1-start='git commit -am "fix: addressing PR round 1 comments (START)"'
 alias gc-pr2-start='git commit -am "fix: addressing PR round 2 comments (START)"'
 alias gc-pr3-start='git commit -am "fix: addressing PR round 3 comments (START)"'
@@ -33,3 +34,22 @@ alias gc-draft2='git commit -am "feat: feature code complete (draft 2)"'
 alias gc-draft3='git commit -am "feat: feature code complete (draft 3)"'
 alias gc-draft4='git commit -am "feat: feature code complete (draft 4)"'
 alias gc-draft5='git commit -am "feat: feature code complete (draft 5)"'
+
+# REST (ALPHABETICALLY SORTED)
+alias gc-dep='echo "build: Ran poetry update"'
+alias gc-tag='git commit -am "build: updated tag"'
+
+alias gc-docs='git commit -am "docs: improved documentation"'
+
+alias gc-migrate='echo "migrate: moved ____"'
+
+alias gc-mm='git commit -am "misc: merged master"'
+alias gc-mc='git commit -am "misc: resolved merge conflicts"'
+alias gc-sc='git commit -am "misc: small change"'
+
+alias gc-clean='git commit -am "misc: various code cleaning"'
+# gc-clean: removing log statements, tidying up code
+
+alias gc-lint='git commit -am "style: lint changes"'
+
+alias gc-test='git commit -am "test: added test case(s)"'
